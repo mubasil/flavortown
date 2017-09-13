@@ -1,6 +1,7 @@
 import urllib2 as url
 import json
 from bs4 import BeautifulSoup
+import unicodedata as ud
 
 class RecipesWikia:
     def __init__(self, link):
@@ -16,6 +17,7 @@ class RecipesWikia:
 
         content = parser.find(id="mw-content-text")
         self.ingredients = self.get_ingredients(content)
+
         self.directions = self.get_directions(content)
         self.image = self.get_image(content)
         return {
