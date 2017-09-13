@@ -1,9 +1,14 @@
-from scrape import RecipesWikia
+from recipeswikia import RecipesWikia
+from allrecipes import AllRecipes
 import sys
 import json
 
-scraper = RecipesWikia(sys.argv[1])
+scraper = None
+if 'allrecipes' in sys.argv[1]:
+    scraper = AllRecipes(sys.argv[1])
+else:
+    scraper = RecipesWikia(sys.argv[1])
 
 result = scraper.scrape()
-output = json.dumps(result, indent = 4, ensure_ascii=False).encode('utf-8')
-print output
+recipe = json.dumps(result, indent = 4, ensure_ascii=False).encode('utf-8')
+print recipe
