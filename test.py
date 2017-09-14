@@ -3,12 +3,14 @@ from allrecipes import AllRecipes
 import sys
 import json
 
-scraper = None
-if 'allrecipes' in sys.argv[1]:
-    scraper = AllRecipes(sys.argv[1])
-else:
-    scraper = RecipesWikia(sys.argv[1])
-
-result = scraper.scrape()
-recipe = json.dumps(result, indent = 4, ensure_ascii=False).encode('utf-8')
-print recipe
+scraper = AllRecipes()
+link = 'http://allrecipes.com/recipe/'
+i = 120000
+recipes = []
+while i < 120050:
+    url = link + str(i)
+    result = scraper.scrape(url)
+    filename = 'recipes/' + result['Recipe'] + '.json'
+    with open(filename,'w') as file:
+        json.dump(result, file)
+    i+=1
