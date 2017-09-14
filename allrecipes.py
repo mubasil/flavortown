@@ -2,14 +2,15 @@ import urllib2 as url
 from bs4 import BeautifulSoup
 
 class AllRecipes:
-    def __init__(self, link):
-        self.url = url.urlopen(link)
+    def __init__(self):
+        self.url = None
         self.name = None
         self.ingredients = None
         self.directions = None
         self.image = None
 
-    def scrape(self):
+    def scrape(self, link):
+        self.url = url.urlopen(link)
         parser = BeautifulSoup(self.url, 'html.parser')
         self.name = self.get_name(parser)
         self.ingredients = self.get_ingredients(parser)
