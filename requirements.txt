@@ -1,2 +1,16 @@
 urllib2
 bs4
+
+
+
+environment_id = '0dd564b8-f169-41c2-b577-e84b1ea2167f'
+
+#default configuration
+configuration_id = '372620ba-2523-4f15-a58a-7cf75cb54090'
+collection_id = 'efc6fca2-0110-4fd1-9e35-579cb5f1295c'
+
+discovery = DiscoveryV1(
+  username='ff7c4fbe-e752-4c91-b99e-7f7db797e294',
+  password='E3qe7yeI5Nrf',
+  version='2017-09-01'
+)
