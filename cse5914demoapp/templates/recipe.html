@@ -1,0 +1,370 @@
+<html>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link href="https://bootswatch.com/united/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+<script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+
+<style>
+
+html, body{
+
+height:100%; 
+padding:30px;
+background-color: #C0392B; 
+
+}
+
+.panel-default {
+    border-color: black;
+}
+ 
+.container-fluid{
+  height:100%;
+  display:table;
+  width: 100%;
+  padding: 0;
+}
+ 
+.row-fluid {height: 100%; display:table-cell; vertical-align: middle;}
+ 
+ 
+
+.centering {
+  float:none;
+  margin:0 auto;
+  -webkit-animation-duration: 1s;
+}
+
+.second {
+
+ -webkit-animation-delay: 3s;
+
+}
+
+
+.card {
+    font-size: 1em;
+    overflow: hidden;
+	background-color: #FDFEFE;
+	border-color:#17202A;
+	text-color:#17202A;
+    padding: 0;
+    border: none;
+    border-radius: .28571429rem;
+    box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+}
+
+.card-block {
+    font-size: 1em;
+    position: relative;
+    margin: 0;
+    padding: 1em;
+    border: none;
+    border-top: 1px solid rgba(34, 36, 38, .1);
+    box-shadow: none;
+}
+
+.top-buffer { margin-top:40px; }
+
+.more-buffer { margin-top:60px; }
+
+.card-img-top {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.card-title {
+    font-size: 1.28571429em;
+    font-weight: 700;
+    line-height: 1.2857em;
+}
+
+.card-text {
+    clear: both;
+    margin-top: .5em;
+    color: rgba(0, 0, 0, .68);
+}
+
+.card-footer {
+    font-size: 1em;
+    position: static;
+    top: 0;
+    left: 0;
+    max-width: 100%;
+    padding: .75em 1em;
+    color: rgba(0, 0, 0, .4);
+    border-top: 1px solid rgba(0, 0, 0, .05) !important;
+    background: #fff;
+}
+
+.card-inverse .btn {
+    border: 1px solid rgba(0, 0, 0, .05);
+}
+
+.profile {
+    position: absolute;
+    top: -12px;
+    display: inline-block;
+    overflow: hidden;
+    box-sizing: border-box;
+    width: 25px;
+    height: 25px;
+    margin: 0;
+    border: 1px solid #fff;
+    border-radius: 50%;
+}
+
+.profile-avatar {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+}
+
+.profile-inline {
+    position: relative;
+    top: 0;
+    display: inline-block;
+}
+
+.profile-inline ~ .card-title {
+    display: inline-block;
+    margin-left: 4px;
+    vertical-align: top;
+}
+
+.text-bold {
+    font-weight: 700;
+}
+
+.meta {
+    font-size: 1em;
+    color: rgba(0, 0, 0, .4);
+}
+
+.meta a {
+    text-decoration: none;
+    color: rgba(0, 0, 0, .4);
+}
+
+.meta a:hover {
+    color: rgba(0, 0, 0, .87);
+}
+
+h1{
+
+	color: white;
+	
+
+}
+
+h2{
+
+	color: white;
+
+}
+
+.first {
+
+ -webkit-animation-duration: 1s;
+ -webkit-animation-delay: 0s;
+
+}
+
+.second {
+
+ -webkit-animation-duration: 1s;
+ -webkit-animation-delay: 1s;
+
+}
+
+.third {
+
+ -webkit-animation-duration: 1s;
+ -webkit-animation-delay: 1.5s;
+
+}
+
+.fourth {
+
+ -webkit-animation-duration: 1s;
+ -webkit-animation-delay: 2s;
+
+}
+
+.fifth {
+
+ -webkit-animation-duration: 1s;
+ -webkit-animation-delay: 3s;
+
+}
+
+.sixth {
+
+ -webkit-animation-duration: 1s;
+ -webkit-animation-delay: 4s;
+
+}
+
+.seventh {
+
+ -webkit-animation-duration: 1s;
+ -webkit-animation-delay: 5s;
+
+}
+
+</style>
+
+<body>
+
+	<div class="col-lg-6">
+		<div class="row animated fadeInUp first">
+			
+		
+		<div class="card">
+		  <img class="card-img-top" src="https://vignette.wikia.nocookie.net/recipes/images/4/4a/Peanut_Butter_%26_Jelly_Sandwich_image.jpg" alt="Card image cap">
+		  <div class="card-block">
+			<h4 class="card-title">Peanut Butter and Jelly Sandwich</h4>
+			<h6 class="card-subtitle mb-2 text-muted">Description</h6>
+			<p class="card-text">Peanut Butter and Jelly (or PBJ) is a very popular type of lunch.</p>
+			<h6 class="card-subtitle mb-2 text-muted">Ingredients</h6>
+			<p class="card-text">
+			<ul>
+			<li>2 slices of bread</li>
+			<li>Peanut Butter</li>
+			<li>Jelly</li>
+			</ul>
+			<h6 class="card-subtitle mb-2 text-muted">Instructions</h6>
+			<p class="card-text">
+			<ol>
+			<li> First, lay out the slices of bread. </li>
+			<li> Spread peanut butter on one side of one of the slices. </li>
+			<li> Do the same for the jelly on the other slice of bread. </li>
+			<li> Place one of the slices on top of the other slice so that the peanut butter and jelly are touching. </li>
+			<li> Cut in half and enjoy </li>
+			</ol> 
+		  </div>
+		</div>
+		
+
+			
+			
+        </div>
+	</div>
+	
+	<div class="col-lg-6 animated fadeInUp second">
+		<h1>Chat</h1>
+		<div class="well well-lg" style="min-height:600px">
+		
+		<div class="col-md-6" id="chatbox1">
+		</div>
+		
+		<div class="col-md-6" id="chatbox2">
+		</div>
+		
+		
+		</div>
+		<form class="form-inline">
+		  <input type="text" class="form-control" id="inlineFormInput" placeholder="Enter query..." style="width:75%;">
+		  <button type="button" class="btn btn-success">Submit</button>
+		  <button type="button" onclick="gogonextone()" class="btn btn-success">
+		  <span id="mySpan">
+		  Speak
+		  </span>
+		  </button>
+		</form>
+	</div>
+
+
+</body>
+
+<script>
+
+var c = 0;
+
+var queries = ["Is this vegan?", "What's the first step?", "How do I slice bread?"];
+
+var responses = ["Yes, this recipe is vegan", "First, lay out the slices of bread.", "Here is a video that might help you: "];
+
+function gogonextone(){
+
+	document.getElementById("mySpan").textContent = "...";
+	
+	var timer0 = setTimeout(function() {
+            ask(queries[c], "chatbox2", "chatbox1");
+			document.getElementById("mySpan").textContent = "Speak";
+        }, 2000);
+
+	
+	
+	var timer = setTimeout(function() {
+            ask(responses[c], "chatbox1", "chatbox2");
+			responsiveVoice.speak(responses[c]);
+			c++;
+        }, 3000);
+
+}
+
+function getCards() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "/cards", false);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send();
+    var response = JSON.parse(xhttp.responseText);
+	
+	//response format: array of image, title pairs
+	
+	var cards = [];
+	
+	for(card in response){
+	
+		cards.append();
+		document.getElementById('div').appendChild();
+	
+	}
+}
+
+
+function ask(t, i, j){
+	
+	var br = document.createElement('br');
+	
+	var div = document.createElement('div');
+	div.className = 'list-group';
+
+    var div2 = document.createElement('div');
+	div.className = 'list-group-item clearfix';
+	
+	
+
+	var text = document.createTextNode(t);
+	
+	
+	div2.appendChild(text);
+	
+	if(c == 2 && i==="chatbox1"){
+	
+		var embedded = document.createElement('iframe');
+		embedded.width = "220";
+		embedded.height = "135";
+		embedded.src = "https://www.youtube.com/embed/jXZ-x0ix_-g";
+		embedded.frameborder = "0";
+		div2.appendChild(br);
+		div2.appendChild(embedded);
+		
+	}
+	
+	div.appendChild(div2);
+
+    document.getElementById(i).appendChild(div);
+	document.getElementById(j).appendChild(br);
+	document.getElementById(j).appendChild(br);
+	document.getElementById(j).appendChild(br);
+}
+
+</script>
+</html>

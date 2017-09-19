@@ -1,0 +1,5 @@
+---
+applications:
+ - name: cse5914demoapp
+   random-route: true
+   memory: 128M

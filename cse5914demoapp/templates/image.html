@@ -1,0 +1,245 @@
+<html>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link href="https://bootswatch.com/united/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+
+html, body{
+
+height:100%; 
+padding:30px;
+background-color: #C0392B; 
+
+}
+ 
+.container-fluid{
+  height:100%;
+  display:table;
+  width: 100%;
+  padding: 0;
+}
+ 
+.row-fluid {height: 100%; display:table-cell; vertical-align: middle;}
+ 
+ 
+
+.centering {
+  float:none;
+  margin:0 auto;
+  -webkit-animation-duration: 1s;
+}
+
+.first {
+
+ -webkit-animation-duration: 1s;
+ -webkit-animation-delay: 0s;
+
+}
+
+.second {
+
+ -webkit-animation-duration: 1s;
+ -webkit-animation-delay: 3s;
+
+}
+
+.third {
+
+ -webkit-animation-duration: 1s;
+ -webkit-animation-delay: 4s;
+
+}
+
+.fourth {
+
+ -webkit-animation-duration: 1s;
+ -webkit-animation-delay: 5.5s;
+
+}
+
+.fifth {
+
+ -webkit-animation-duration: 1s;
+ -webkit-animation-delay: 6.8s;
+
+}
+
+.card {
+    font-size: 1em;
+    overflow: hidden;
+	background-color: #FDFEFE;
+	border-color:#17202A;
+	text-color:#17202A;
+    padding: 0;
+    border: none;
+    border-radius: .28571429rem;
+    box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+}
+
+.card-block {
+    font-size: 1em;
+    position: relative;
+    margin: 0;
+    padding: 1em;
+    border: none;
+    border-top: 1px solid rgba(34, 36, 38, .1);
+    box-shadow: none;
+}
+
+.top-buffer { margin-top:150px; }
+
+.more-buffer { margin-top:60px; }
+
+.card-img-top {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.card-title {
+    font-size: 1.28571429em;
+    font-weight: 700;
+    line-height: 1.2857em;
+}
+
+.card-text {
+    clear: both;
+    margin-top: .5em;
+    color: rgba(0, 0, 0, .68);
+}
+
+.card-footer {
+    font-size: 1em;
+    position: static;
+    top: 0;
+    left: 0;
+    max-width: 100%;
+    padding: .75em 1em;
+    color: rgba(0, 0, 0, .4);
+    border-top: 1px solid rgba(0, 0, 0, .05) !important;
+    background: #fff;
+}
+
+.card-inverse .btn {
+    border: 1px solid rgba(0, 0, 0, .05);
+}
+
+.profile {
+    position: absolute;
+    top: -12px;
+    display: inline-block;
+    overflow: hidden;
+    box-sizing: border-box;
+    width: 25px;
+    height: 25px;
+    margin: 0;
+    border: 1px solid #fff;
+    border-radius: 50%;
+}
+
+.profile-avatar {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+}
+
+.profile-inline {
+    position: relative;
+    top: 0;
+    display: inline-block;
+}
+
+.profile-inline ~ .card-title {
+    display: inline-block;
+    margin-left: 4px;
+    vertical-align: top;
+}
+
+.text-bold {
+    font-weight: 700;
+}
+
+.meta {
+    font-size: 1em;
+    color: rgba(0, 0, 0, .4);
+}
+
+.meta a {
+    text-decoration: none;
+    color: rgba(0, 0, 0, .4);
+}
+
+.meta a:hover {
+    color: rgba(0, 0, 0, .87);
+}
+
+h1{
+
+	color: white;
+	
+
+}
+
+h2{
+
+	color: white;
+
+}
+
+</style>
+
+<body>
+
+	<div class="col-lg-6 top-buffer text-center animated fadeInUp first">
+		<img width="640" src="http://i.imgur.com/UaJKtUv.jpg">
+		<div class="animated fadeOut fifth">
+			<h2>Analyzing image...<i class="fa fa-circle-o-notch fa-spin" style="font-size:36px"></i></h2>
+		</div>
+	</div>	
+	<div class="col-lg-6 animated fadeInUp second">
+		<h1>I see...</h1>
+		
+		<ul class="list-group animated fadeInUp third">
+		  <li class="list-group-item justify-content-between">
+			Bread
+			<span class="badge badge-default badge-pill">x</span>
+		  </li>
+		</ul>
+		
+		<ul class="list-group animated fadeInUp fourth">
+		  <li class="list-group-item justify-content-between">
+			Peanut Butter
+			<span class="badge badge-default badge-pill">x</span>
+		  </li>
+		</ul>
+		
+		<ul class="list-group animated fadeInUp fifth">
+		  <li class="list-group-item justify-content-between">
+			Grape Jelly
+			<span class="badge badge-default badge-pill">x</span>
+		  </li>
+		</ul>
+		
+		<ul class="list-group animated fadeInUp fifth">
+		  <li class="list-group-item justify-content-between">
+<input id="textinput" name="textinput" type="text" placeholder="Add ingredient..." class="form-control input-md">		  </li>
+		</ul>
+		
+		<a href="/cards" class="btn btn-default more-buffer animated fadeInUp fifth">
+		Next
+		</a>
+	</div>
+	
+
+
+</body>
+
+<script>
+
+</script>
+</html>
