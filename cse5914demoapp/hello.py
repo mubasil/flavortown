@@ -19,7 +19,7 @@ db = None
 def getRecipes(ingredientsList):
 
 	recipeList = []	
-	recipe = {'name':'', 'ingredients':[], 'description':'', 'instructions':[], 'imageUrl':''}
+	recipe = {'Recipe':'', 'Ingredients':[], 'Directions':[], 'Image':''}
 	
 	#TODO logic
 	recipeList.append(recipe);
@@ -87,7 +87,7 @@ def getIngredientsFromImage():
 @app.route('/getRecipes', methods=['POST'])
 def getRecipesFromIngredientsList():
 	content = request.get_json(silent=True)
-	ingredients = content['ingredients']
+	ingredients = content['Ingredients']
 	print(ingredients)
 	recipeList = getRecipes(ingredients)
 	return jsonify(recipeList)

@@ -6,13 +6,14 @@ import time
 
 scraper = AllRecipes()
 link = 'http://allrecipes.com/recipe/'
-i = 120090
+i = 120200
 recipes = []
-while i < 120200:
+while i < 120600:
     time.sleep(2)
     url = link + str(i)
     result = scraper.scrape(url)
     filename = 'recipes/' + result['Recipe'] + '.json'
-    with open(filename,'w') as file:
-        json.dump(result, file)
-    i+=1
+    with open(filename, 'w') as outFile:
+        json.dump(result, outFile)
+    i += 1
+    
