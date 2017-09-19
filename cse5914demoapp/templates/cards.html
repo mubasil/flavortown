@@ -5,6 +5,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+<script src="{{ url_for('static', filename='app_controller.js')}}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.min.js"></script>
 
 <style>
 
@@ -214,79 +216,28 @@ h3{
 
 </style>
 
-<body>
+<body ng-app="myApp" ng-controller="ctrl">
 
-	<div class="col-lg-6">
+	<div class="col-lg-6" ng-init="console.log('bro')">
 		<div class="row animated fadeInUp first">
 			<h1>Here are some recipes I found: </h1>
 		</div>
-        <div class="row top-buffer animated fadeInUp second">
-            <div class="col-md-4">
-                <div class="card">
-                    <img class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/An_image_of_a_toast_sandwich%2C_shot_from_the_side.jpg/440px-An_image_of_a_toast_sandwich%2C_shot_from_the_side.jpg">
-                    <div class="card-block">
-                        <h5 >Toast Sandwich</h5>
-                    </div>
-                </div>
-            </div>
-			
-			<div class="col-md-4 animated fadeInUp third">
-                <div class="card">
-                    <img class="card-img-top" src="http://www.uwlm.ca/wp-content/uploads/2015/09/peanutbutter.jpg">
-                    <div class="card-block">
-                        <h5 >Peanut Butter Sandwich</h5>
-                    </div>
-                </div>
-            </div>  
-        </div>
-		<a href="/recipe">
-		<div class="row more-buffer animated fadeInUp fourth">
-		<div class="col-md-4">
-                <div class="card">
-                    <img class="card-img-top" src="https://vignette.wikia.nocookie.net/recipes/images/4/4a/Peanut_Butter_%26_Jelly_Sandwich_image.jpg">
-                    <div class="card-block">
-                        <h5 >Peanut Butter and Jelly Sandwich</h5>
-                    </div>
-                </div>
-            </div>
-		</div>
-		</div>
-		</a>
-	<div class="col-lg-6">
-		<div class="row animated fadeInUp fifth">
-		<h1>Going shopping?</h1>
-		</div>
-		<div class="animated fadeInUp sixth">
-		<div class="row">
-		<h3>If you get avacados, you could make...<h3>
-		</div>
-		<div class="row ">
-		<div class="col-md-4">
-                <div class="card">
-                    <img class="card-img-top" src="https://lovingitvegan.com/wp-content/uploads/2015/10/Avocado-Toast-2.jpg">
-                    <div class="card-block">
-                        <h5 >Avacado Toast</h5>
-                    </div>
-                </div>
-            </div>
-		</div>
-		</div>
-		<div class="animated fadeInUp seventh">
-			<div class="row top-buffer">
-			<h3>If you get bananas, you could make...</h3>
-			</div>
-			<div class="row ">
+        <div ng-repeat="recipe in ctrl.recipes">
+		<div class="row more-buffer animated fadeInUp second">
+			<a href="/recipe" ng-click="ctrl.selectRecipe($index)">
 			<div class="col-md-4">
-					<div class="card">
-						<img class="card-img-top" src="https://www.godairyfree.org/wp-content/uploads/2012/11/pbbananasandwich.jpg">
-						<div class="card-block">
-							<h5 >Peanut Butter and Banana Sandwich</h5>
-						</div>
-					</div>
-				</div>
-			</div>
+                <div class="card">
+                    <img class="card-img-top" src="">
+                    <div class="card-block">
+                        <h5 >{{ '{{recipe.title}}' }}</h5>
+                    </div>
+                </div>
+            </div>
+			</a>
+		</div>
 		</div>
 	</div>
+	
 
 
 </body>

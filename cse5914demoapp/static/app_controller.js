@@ -1,11 +1,14 @@
-var app = angular.module('myApp', ["ngTable", "ngResource"]);
-app.controller('mainCtrl', function($scope, NgTableParams, $resource, $http) {
+var app = angular.module('myApp', []);
+app.controller('ctrl', function($http) {
 	
 	var self = this;
 	self.recipes = [];
 	
-    self.ingredients = [];
+    self.ingredients = {};
 	self.imageFile = "";
+	self.activeRecipe = {};
+	
+	getRecipes();
 	
 function getIngredients(){
 	
@@ -17,11 +20,18 @@ function getIngredients(){
 	
 }
 function getRecipes() {
-    
+   
+	self.ingredients = {"ingredients":["a","b","c"]};
 	$http.post("/getRecipes", self.ingredients)
     .then(function(d) {
-        self.recipes = self.recipes.concat(d);
+		console.log(d);
+        //self.recipes = self.recipes.concat(d);
     });	
+	
+}
+function selectRecipe(id){
+	
+	self.activeRecipe = self.recipes[id];
 	
 }
 	
