@@ -4,18 +4,31 @@ app.controller('ctrl', function($http, $scope) {
 	var self = this;
 	self.recipes = [];
 	
-    self.ingredients = {};
+    self.ingredients = [];
 	self.imageFile = "";
 	self.selectedRecipe = {};
+	self.newIngredient = "";
 	
 	
 self.getIngredients = function(){
 	
 	$http.post("/processImage", self.imagefile)
     .then(function(d) {
-        self.ingredients = self.ingredients.concat(d);
+        self.ingredients = self.ingredients.concat(d.data);
     });	
 
+	
+}
+
+self.removeIngredient = function(id){
+	
+	self.ingredients.splice(id, 1);
+	
+}
+
+self.addIngredient= function(){
+	
+	self.ingredients.push(self.newIngredient);
 	
 }
 

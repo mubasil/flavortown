@@ -302,26 +302,6 @@ function gogonextone(){
 
 }
 
-function getCards() {
-    var xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "/cards", false);
-    xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.send();
-    var response = JSON.parse(xhttp.responseText);
-	
-	//response format: array of image, title pairs
-	
-	var cards = [];
-	
-	for(card in response){
-	
-		cards.append();
-		document.getElementById('div').appendChild();
-	
-	}
-}
-
-
 function ask(t, i, j){
 	
 	var br = document.createElement('br');

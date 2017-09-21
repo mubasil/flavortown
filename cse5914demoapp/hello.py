@@ -21,7 +21,8 @@ def getRecipes(ingredientsList):
 	recipeList = []	
 	recipe = {'Recipe':'', 'Ingredients':[], 'Directions':[], 'Image':''}
 	
-	#TODO logic
+	#TODO WATSON CALLS
+	
 	recipeList.append(recipe);
 
 	return recipeList
@@ -31,7 +32,7 @@ def getRecipes(ingredientsList):
 #takes in an image file and returns a list of ingredients in the image
 def processImage(imagefile):
 
-	ingredientList = [{'ingredient':''}]
+	ingredientList = ["Bread", "Peanut Butter", "Jelly"]
 	
 	#TODO logic
 	
@@ -80,7 +81,8 @@ def home():
 	
 @app.route('/processImage', methods=['POST'])
 def getIngredientsFromImage():
-	imagefile = flask.request.files.get('imagefile', '')
+	#imagefile = flask.request.files.get('imagefile', '')
+	imagefile = ""
 	ingredientList = processImage(imagefile)
 	return jsonify(ingredientList)
 	
