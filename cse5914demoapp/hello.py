@@ -89,8 +89,8 @@ def getIngredientsFromImage():
 @app.route('/getRecipes', methods=['POST'])
 def getRecipesFromIngredientsList():
 	content = request.get_json(silent=True)
-	ingredients = content['Ingredients']
-	print(ingredients)
+	ingredients = content
+	print(content)
 	recipeList = getRecipes(ingredients)
 	return jsonify(recipeList)
 	

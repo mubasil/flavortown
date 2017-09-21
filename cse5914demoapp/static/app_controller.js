@@ -29,12 +29,14 @@ self.removeIngredient = function(id){
 self.addIngredient= function(){
 	
 	self.ingredients.push(self.newIngredient);
+	self.newIngredient = "";
 	
 }
 
 self.getRecipes = function(){
    
-	self.ingredients = {"ingredients":["a","b","c"]};
+   console.log(self.ingredients);
+   
 	$http.post("/getRecipes", self.ingredients)
     .then(function(d) {
         self.recipes = self.recipes.concat(d.data);
