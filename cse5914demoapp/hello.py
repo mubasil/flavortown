@@ -19,7 +19,11 @@ db = None
 def getRecipes(ingredientsList):
 
 	recipeList = []	
+<<<<<<< HEAD
 	recipe1 = {'title':'Toast Sandwich', 'ingredients':[], 'description':'', 'instructions':[], 'imageUrl':'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/An_image_of_a_toast_sandwich%2C_shot_from_the_side.jpg/440px-An_image_of_a_toast_sandwich%2C_shot_from_the_side.jpg'}
+=======
+	recipe = {'Recipe':'', 'Ingredients':[], 'Directions':[], 'Image':''}
+>>>>>>> a6b9b2880ef02e95680128b18f6c2ccd46011a62
 	
 	#TODO logic
 	
@@ -90,7 +94,12 @@ def getIngredientsFromImage():
 @app.route('/getRecipes', methods=['POST'])
 def getRecipesFromIngredientsList():
 	content = request.get_json(silent=True)
+<<<<<<< HEAD
 	ingredients = content['ingredients']
+=======
+	ingredients = content['Ingredients']
+	print(ingredients)
+>>>>>>> a6b9b2880ef02e95680128b18f6c2ccd46011a62
 	recipeList = getRecipes(ingredients)
 	return jsonify(recipeList)
 	
