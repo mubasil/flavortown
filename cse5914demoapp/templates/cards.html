@@ -188,12 +188,12 @@ h3{
 		</div>
 		<div class="row more-buffer">
 		    <div ng-repeat="recipe in ctrl.recipes track by $index">
-			<a ng-href="/recipe" ng-click="ctrl.selectRecipe($index)">
+			<a ng-href="/page/recipe" ng-click="ctrl.selectRecipe($index)">
 			<div class="col-md-4">
                 <div class="card"">
-                    <img class="card-img-top" ng-src="{{ '{{recipe.imageUrl}}' }}">
+                    <img class="card-img-top" ng-src="{{ '{{recipe.Image}}' }}">
                     <div class="card-block">
-                        <h5 >{{ '{{recipe.title}}' }}</h5>
+                        <h5 >{{ '{{recipe.Recipe}}' }}</h5>
                     </div>
                 </div>
             </div>

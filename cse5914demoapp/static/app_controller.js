@@ -30,14 +30,12 @@ self.addIngredient= function(){
 	
 	self.ingredients.push(self.newIngredient);
 	self.newIngredient = "";
-	
+	self.postIngredients();
 }
 
 self.getRecipes = function(){
-   
-   console.log(self.ingredients);
-   
-	$http.post("/getRecipes", self.ingredients)
+      
+	$http.get("/getRecipes")
     .then(function(d) {
         self.recipes = self.recipes.concat(d.data);
 		for(var i =0; i < self.recipes.length; i++){
@@ -48,9 +46,36 @@ self.getRecipes = function(){
 	
 }
 
+self.getSelected = function(){
+      
+	$http.get("/getSelected")
+    .then(function(d) {
+        
+		self.selectedRecipe = d.data;
+
+    });	
+	
+}
+
+self.postIngredients = function(){
+	
+	$http.post("/postIngredients", self.ingredients)
+    .then(function(d) {
+        
+
+    });	
+	
+}
+
 self.selectRecipe = function(id){
 	
 	self.selectedRecipe = self.recipes[id];
+	
+	$http.post("/selectRecipe", self.selectedRecipe)
+    .then(function(d) {
+        
+
+    });	
 	
 }
 	
