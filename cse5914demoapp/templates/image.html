@@ -4,8 +4,11 @@
 <link href="https://bootswatch.com/united/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular-animate.js"></script>
+<script src="{{ url_for('static', filename='app_controller.js')}}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.min.js"></script>
+
+
 <style>
 
 html, body{
@@ -193,9 +196,9 @@ h2{
 
 </style>
 
-<body>
+<body ng-app="myApp" ng-controller="ctrl as ctrl">
 
-	<div class="col-lg-6 top-buffer text-center animated fadeInUp first">
+	<div class="col-lg-6 top-buffer text-center animated fadeInUp first" ng-init="ctrl.getIngredients()">
 		<img width="640" src="http://i.imgur.com/UaJKtUv.jpg">
 		<div class="animated fadeOut fifth">
 			<h2>Analyzing image...<i class="fa fa-circle-o-notch fa-spin" style="font-size:36px"></i></h2>
@@ -204,28 +207,14 @@ h2{
 	<div class="col-lg-6 animated fadeInUp second">
 		<h1>I see...</h1>
 		
-		<ul class="list-group animated fadeInUp third">
+		<ul class="list-group animated fadeInUp third" ng-repeat="ingredient in ctrl.ingredients">
 		  <li class="list-group-item justify-content-between">
-			Bread
+			{{ '{{ingredient}}' }}
 			<span class="badge badge-default badge-pill">x</span>
 		  </li>
 		</ul>
 		
 		<ul class="list-group animated fadeInUp fourth">
-		  <li class="list-group-item justify-content-between">
-			Peanut Butter
-			<span class="badge badge-default badge-pill">x</span>
-		  </li>
-		</ul>
-		
-		<ul class="list-group animated fadeInUp fifth">
-		  <li class="list-group-item justify-content-between">
-			Grape Jelly
-			<span class="badge badge-default badge-pill">x</span>
-		  </li>
-		</ul>
-		
-		<ul class="list-group animated fadeInUp fifth">
 		  <li class="list-group-item justify-content-between">
 <input id="textinput" name="textinput" type="text" placeholder="Add ingredient..." class="form-control input-md">		  </li>
 		</ul>

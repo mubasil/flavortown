@@ -4,8 +4,9 @@
 <link href="https://bootswatch.com/united/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
-<script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular-animate.js"></script>
+<script src="{{ url_for('static', filename='app_controller.js')}}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.min.js"></script>
 
 <style>
 
@@ -226,26 +227,18 @@ h2{
 			
 		
 		<div class="card">
-		  <img class="card-img-top" src="https://vignette.wikia.nocookie.net/recipes/images/4/4a/Peanut_Butter_%26_Jelly_Sandwich_image.jpg" alt="Card image cap">
+		  <img class="card-img-top" ng-src="{{ '{{ctrl.selectedRecipe.Image}}' }}">
 		  <div class="card-block">
-			<h4 class="card-title">{{ '{{ctrl.selectedRecipe.title}}' }}</h4>
-			<h6 class="card-subtitle mb-2 text-muted">Description</h6>
-			<p class="card-text">Peanut Butter and Jelly (or PBJ) is a very popular type of lunch.</p>
+			<h4 class="card-title">{{ '{{ctrl.selectedRecipe.Recipe}}' }}</h4>
 			<h6 class="card-subtitle mb-2 text-muted">Ingredients</h6>
 			<p class="card-text">
 			<ul>
-			<li>2 slices of bread</li>
-			<li>Peanut Butter</li>
-			<li>Jelly</li>
+				<li ng-repeat="ingredient in ctrl.selectedRecipe.Ingredients">{{'{{ingredient}}'}}</li>
 			</ul>
 			<h6 class="card-subtitle mb-2 text-muted">Instructions</h6>
 			<p class="card-text">
 			<ol>
-			<li> First, lay out the slices of bread. </li>
-			<li> Spread peanut butter on one side of one of the slices. </li>
-			<li> Do the same for the jelly on the other slice of bread. </li>
-			<li> Place one of the slices on top of the other slice so that the peanut butter and jelly are touching. </li>
-			<li> Cut in half and enjoy </li>
+				<li ng-repeat="direction in ctrl.selectedRecipe.Directions">{{'{{direction}}'}}</li>
 			</ol> 
 		  </div>
 		</div>

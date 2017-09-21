@@ -6,7 +6,7 @@ app.controller('ctrl', function($http, $scope) {
 	
     self.ingredients = {};
 	self.imageFile = "";
-	self.activeRecipe = {};
+	self.selectedRecipe = {};
 	
 	
 self.getIngredients = function(){
@@ -35,7 +35,7 @@ self.getRecipes = function(){
 
 self.selectRecipe = function(id){
 	
-	self.activeRecipe = self.recipes[id];
+	self.selectedRecipe = self.recipes[id];
 	
 }
 	
