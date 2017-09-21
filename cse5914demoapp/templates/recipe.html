@@ -219,7 +219,7 @@ h2{
 
 </style>
 
-<body>
+<body ng-app="myApp" ng-controller="ctrl as ctrl">
 
 	<div class="col-lg-6">
 		<div class="row animated fadeInUp first">
@@ -228,7 +228,7 @@ h2{
 		<div class="card">
 		  <img class="card-img-top" src="https://vignette.wikia.nocookie.net/recipes/images/4/4a/Peanut_Butter_%26_Jelly_Sandwich_image.jpg" alt="Card image cap">
 		  <div class="card-block">
-			<h4 class="card-title">Peanut Butter and Jelly Sandwich</h4>
+			<h4 class="card-title">{{ '{{ctrl.selectedRecipe.title}}' }}</h4>
 			<h6 class="card-subtitle mb-2 text-muted">Description</h6>
 			<p class="card-text">Peanut Butter and Jelly (or PBJ) is a very popular type of lunch.</p>
 			<h6 class="card-subtitle mb-2 text-muted">Ingredients</h6>

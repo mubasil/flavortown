@@ -1,5 +1,5 @@
-var app = angular.module('myApp', []);
-app.controller('ctrl', function($http) {
+var app = angular.module('myApp', ['ngAnimate']);
+app.controller('ctrl', function($http, $scope) {
 	
 	var self = this;
 	self.recipes = [];
@@ -8,9 +8,8 @@ app.controller('ctrl', function($http) {
 	self.imageFile = "";
 	self.activeRecipe = {};
 	
-	getRecipes();
 	
-function getIngredients(){
+self.getIngredients = function(){
 	
 	$http.post("/processImage", self.imagefile)
     .then(function(d) {
@@ -19,17 +18,22 @@ function getIngredients(){
 
 	
 }
-function getRecipes() {
+
+self.getRecipes = function(){
    
 	self.ingredients = {"ingredients":["a","b","c"]};
 	$http.post("/getRecipes", self.ingredients)
     .then(function(d) {
-		console.log(d);
-        //self.recipes = self.recipes.concat(d);
+        self.recipes = self.recipes.concat(d.data);
+		for(var i =0; i < self.recipes.length; i++){
+			self.recipes[i].style = " " + (i + 2) + "s;";
+		}
+
     });	
 	
 }
-function selectRecipe(id){
+
+self.selectRecipe = function(id){
 	
 	self.activeRecipe = self.recipes[id];
 	

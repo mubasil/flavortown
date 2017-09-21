@@ -4,7 +4,7 @@
 <link href="https://bootswatch.com/united/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular-animate.js"></script>
 <script src="{{ url_for('static', filename='app_controller.js')}}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.min.js"></script>
 
@@ -43,6 +43,9 @@ background-color: #C0392B;
 
 
 .card {
+  animation: fadeInUp 1s;
+    animation-delay: 3s;
+
     font-size: 1em;
     overflow: hidden;
 	background-color: #FDFEFE;
@@ -153,6 +156,7 @@ background-color: #C0392B;
 }
 
 h1{
+  animation: fadeInUp 1s;
 
 	color: white;
 	
@@ -160,81 +164,42 @@ h1{
 }
 
 h3{
+  animation: fadeInUp 1s;
 
 	color: white;
 
 }
 
-.first {
 
- -webkit-animation-duration: 1s;
- -webkit-animation-delay: 0s;
-
+.card.ng-enter {
+  animation: fadeInUp 1s;
 }
 
-.second {
-
- -webkit-animation-duration: 1s;
- -webkit-animation-delay: 1s;
-
-}
-
-.third {
-
- -webkit-animation-duration: 1s;
- -webkit-animation-delay: 1.5s;
-
-}
-
-.fourth {
-
- -webkit-animation-duration: 1s;
- -webkit-animation-delay: 2s;
-
-}
-
-.fifth {
-
- -webkit-animation-duration: 1s;
- -webkit-animation-delay: 3s;
-
-}
-
-.sixth {
-
- -webkit-animation-duration: 1s;
- -webkit-animation-delay: 4s;
-
-}
-
-.seventh {
-
- -webkit-animation-duration: 1s;
- -webkit-animation-delay: 5s;
-
+.h1.ng-enter {
+  animation: fadeInUp 1s;
 }
 
 </style>
 
-<body ng-app="myApp" ng-controller="ctrl">
+<body ng-app="myApp" ng-controller="ctrl as ctrl">
 
-	<div class="col-lg-6" ng-init="console.log('bro')">
-		<div class="row animated fadeInUp first">
-			<h1>Here are some recipes I found: </h1>
+	<div class="col-lg-6" ng-init="ctrl.getRecipes()">
+		<div class="row">
+			<h1 ng-animate="">Here are some recipes I found: </h1>
 		</div>
-        <div ng-repeat="recipe in ctrl.recipes">
-		<div class="row more-buffer animated fadeInUp second">
-			<a href="/recipe" ng-click="ctrl.selectRecipe($index)">
+		<div class="row more-buffer">
+		    <div ng-repeat="recipe in ctrl.recipes track by $index">
+			<a ng-href="/recipe">
 			<div class="col-md-4">
-                <div class="card">
-                    <img class="card-img-top" src="">
+                <div class="card"">
+                    <img class="card-img-top" ng-src="{{ '{{recipe.imageUrl}}' }}">
                     <div class="card-block">
                         <h5 >{{ '{{recipe.title}}' }}</h5>
                     </div>
                 </div>
             </div>
 			</a>
-		</div>
+			</div>
 		</div>
 	</div>
 	

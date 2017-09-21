@@ -91,7 +91,6 @@ def getIngredientsFromImage():
 def getRecipesFromIngredientsList():
 	content = request.get_json(silent=True)
 	ingredients = content['ingredients']
-	print(ingredients)
 	recipeList = getRecipes(ingredients)
 	return jsonify(recipeList)
 	
