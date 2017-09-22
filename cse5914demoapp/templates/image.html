@@ -46,7 +46,7 @@ background-color: #C0392B;
 .second {
 
  -webkit-animation-duration: 1s;
- -webkit-animation-delay: 3s;
+ -webkit-animation-delay: 1s;
 
 }
 
@@ -197,29 +197,39 @@ h2{
 </style>
 
 <body ng-app="myApp" ng-controller="ctrl as ctrl">
-
+<!--
 	<div class="col-lg-6 top-buffer text-center animated fadeInUp first" ng-init="ctrl.getIngredients()">
 		<img width="640" src="http://i.imgur.com/UaJKtUv.jpg">
 		<div class="animated fadeOut fifth">
 			<h2>Analyzing image...<i class="fa fa-circle-o-notch fa-spin" style="font-size:36px"></i></h2>
 		</div>
 	</div>	
-	<div class="col-lg-6 animated fadeInUp second">
-		<h1>I see...</h1>
+	
+-->
+	
+	<div class="col-lg-6 animated fadeInUp first">
+		<h1>Enter ingredients: </h1>
+
 		
-		<ul class="list-group animated fadeInUp third" ng-repeat="ingredient in ctrl.ingredients">
-		  <li class="list-group-item justify-content-between">
+		
+		<ul class="list-group animated fadeInUp second">
+		  <li class="list-group-item justify-content-between" ng-repeat="ingredient in ctrl.ingredients">
 			{{ '{{ingredient}}' }}
-			<span class="badge badge-default badge-pill">x</span>
+			<span ng-click="ctrl.removeIngredient($index)" style="cursor:pointer;" class="badge">x</span>
 		  </li>
 		</ul>
 		
-		<ul class="list-group animated fadeInUp fourth">
-		  <li class="list-group-item justify-content-between">
-<input id="textinput" name="textinput" type="text" placeholder="Add ingredient..." class="form-control input-md">		  </li>
-		</ul>
+		<div class="form-group animated fadeInUp second">
+		  <div class="input-group">
+			<span class="input-group-addon">+</span>
+			<input type="text" class="form-control" ng-model="ctrl.newIngredient" placeholder="Add items here">
+			<span class="input-group-btn">
+			  <button class="btn btn-success" type="submit" ng-click="ctrl.addIngredient()">Add</button>
+			</span>
+		  </div>
+		</div>
 		
-		<a href="/cards" class="btn btn-default more-buffer animated fadeInUp fifth">
+		<a href="/page/cards" ng-show="ctrl.ingredients.length > 0" class="btn btn-default more-buffer animated fadeInUp">
 		Next
 		</a>
 	</div>

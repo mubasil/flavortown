@@ -222,7 +222,7 @@ h2{
 
 <body ng-app="myApp" ng-controller="ctrl as ctrl">
 
-	<div class="col-lg-6">
+	<div class="col-lg-6" ng-init="ctrl.getSelected()">
 		<div class="row animated fadeInUp first">
 			
 		
@@ -248,7 +248,7 @@ h2{
 			
         </div>
 	</div>
-	
+	<!--
 	<div class="col-lg-6 animated fadeInUp second">
 		<h1>Chat</h1>
 		<div class="well well-lg" style="min-height:600px">
@@ -271,7 +271,7 @@ h2{
 		  </button>
 		</form>
 	</div>
-
+-->
 
 </body>
 
@@ -301,26 +301,6 @@ function gogonextone(){
         }, 3000);
 
 }
-
-function getCards() {
-    var xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "/cards", false);
-    xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.send();
-    var response = JSON.parse(xhttp.responseText);
-	
-	//response format: array of image, title pairs
-	
-	var cards = [];
-	
-	for(card in response){
-	
-		cards.append();
-		document.getElementById('div').appendChild();
-	
-	}
-}
-
 
 function ask(t, i, j){
 	

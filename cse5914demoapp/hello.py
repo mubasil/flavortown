@@ -4,6 +4,9 @@ import atexit
 import cf_deployment_tracker
 import os
 import json
+import sys
+import watson_developer_cloud
+from watson_developer_cloud import DiscoveryV1
 
 # Emit Bluemix deployment event
 cf_deployment_tracker.track()
@@ -14,17 +17,23 @@ db_name = 'mydb'
 client = None
 db = None
 
+ingredientsList = []
+recipes = {}
+selectedRecipe = {}
+
 
 #takes in a list of ingredients, returns list of possible recipes
-def getRecipes(ingredientsList):
-
-	recipeList = []	
-	recipe = {'Recipe':'', 'Ingredients':[], 'Directions':[], 'Image':''}
-	
-	#TODO logic
-	recipeList.append(recipe);
-
-	return recipeList
+def getRecipes(ingredients):
+	discovery = DiscoveryV1(    
+        username='ff7c4fbe-e752-4c91-b99e-7f7db797e294',
+        password='E3qe7yeI5Nrf',
+        version='2017-09-01'
+	)
+	ingred_str = ','.join([i for i in ingredients])
+	query_str = "Ingredients:" + ingred_str
+	qopts = {'query': query_str}
+	my_query = discovery.query('0a15c836-8ec9-41ca-a33b-93a9d63dae8d', '7844f79c-c259-4a3d-a2d8-2db7d18acd76', qopts)
+	return my_query['results']
 
 
 
@@ -80,17 +89,30 @@ def home():
 	
 @app.route('/processImage', methods=['POST'])
 def getIngredientsFromImage():
-	imagefile = flask.request.files.get('imagefile', '')
+	#imagefile = flask.request.files.get('imagefile', '')
+	imagefile = ""
 	ingredientList = processImage(imagefile)
 	return jsonify(ingredientList)
 	
-@app.route('/getRecipes', methods=['POST'])
+@app.route('/getRecipes', methods=['GET'])
 def getRecipesFromIngredientsList():
-	content = request.get_json(silent=True)
-	ingredients = content['Ingredients']
-	print(ingredients)
-	recipeList = getRecipes(ingredients)
+	global ingredientsList
+	recipeList = getRecipes(ingredientsList)
 	return jsonify(recipeList)
+	
+@app.route('/postIngredients', methods=['POST'])
+def postIngredients():
+	global ingredientsList
+	content = request.get_json(silent=True)
+	ingredientsList = content
+	return jsonify(ingredientsList)
+	
+@app.route('/selectRecipe', methods=['POST'])
+def selectRecipe():
+	global selectedRecipe
+	content = request.get_json(silent=True)
+	selectedRecipe = content
+	return jsonify(selectedRecipe)
 	
 @app.route('/getAnswer', methods=['POST'])
 def getAnswerToQuestion():
@@ -98,6 +120,10 @@ def getAnswerToQuestion():
 	query = content['query']
 	request = answerQuery(query)
 	return jsonify(request)
+	
+@app.route('/getSelected', methods=['GET'])
+def getSelectedRecipe():
+	return jsonify(selectedRecipe)
 	
 @app.route('/page/<string:page_name>/')
 def render_static(page_name):
