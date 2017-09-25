@@ -16,7 +16,7 @@ class Discovery(object):
 
     def query(self, ingreds):
         query_str = "Ingredients:" + ingred_str
-        qopts = {'query': query_str, 'filter': query_str}
+        qopts = {'query': query_str}
         return self.discovery.query('0a15c836-8ec9-41ca-a33b-93a9d63dae8d', '7844f79c-c259-4a3d-a2d8-2db7d18acd76', qopts)
 
 discovery = Discovery()
