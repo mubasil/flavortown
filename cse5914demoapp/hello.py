@@ -24,9 +24,11 @@ selectedRecipe = {}
 #takes in a list of ingredients, returns list of possible recipes
 def getRecipes(ingredients):
 	discovery = Discovery()
-	ingreds= ','.join([i for i in ingredients])
+	#ingreds= ','.join([i for i in ingredients])
+    ingreds = '|'.join([i for i in ingredients])
 	my_query = discovery.query(ingreds)
-	return my_query['results']
+	#return my_query['results']
+    return my_query
 
 
 

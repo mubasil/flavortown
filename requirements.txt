@@ -1,3 +1,4 @@
 urllib2
 bs4
 watson_developer_cloud
+fuzzywuzzy   (pip install fuzzywuzzy[speedup])
