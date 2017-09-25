@@ -14,26 +14,28 @@ class Discovery(object):
           version='2017-09-01'
         )
 
-    def query(self, ingred_str):
+    def query(self, ingredients):
+        ingred_str = '|'.join([word for word in ingredients])
         query_str = "Ingredients:" + ingred_str
-        qopts = {'query': query_str}
-        return self.discovery.query('0a15c836-8ec9-41ca-a33b-93a9d63dae8d', '7844f79c-c259-4a3d-a2d8-2db7d18acd76', qopts)
-    #determine if an ingredient string roughly matches
-    #an element in the list of provided ingredients
-    def isMember(self, s, l):
-        result = process.extractOne(s, l)
-        return result[1] >= 80
+        qopts = {'query': query_str, 'count':1000}
+        my_query = self.discovery.query('0a15c836-8ec9-41ca-a33b-93a9d63dae8d', 
+            '7844f79c-c259-4a3d-a2d8-2db7d18acd76', qopts)
+        return self.processResponse(my_query['results'])   
+             
+    #c:candidate ingredient list
+    #p:provided ingredient list
+    def isMember(self, c, p):
+        misses = 0
+        for ingredient in c:
+            match = process.extractOne(ingredient, p)
+            if match[1] < 80: misses = misses + 1
+            if misses > 0: return False
+        return True
+
     #take the response from Watson and only keep recipes that are a good match
-    #results: List of recipe dictionaries 
-    #discovery.query(...)['results']
     def processResponse(self, results):
         trimmed_results = []
         for recipe in results:
-            good_candidate = True
             lst = recipe['Ingredients']
-            for s in lst:
-                if not self.isMember(s, ingredients):
-                    good_candidate = False
-                    break
-            if good_candidate: trimmed_results.append(recipe)
-        return trimmed_results   
+            if self.isMember(lst, ingredients): trimmed_results.append(recipe)
+        return trimmed_results  

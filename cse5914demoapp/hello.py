@@ -25,8 +25,8 @@ selectedRecipe = {}
 def getRecipes(ingredients):
 	discovery = Discovery()
 	#ingreds= ','.join([i for i in ingredients])
-    ingreds = '|'.join([i for i in ingredients])
-	my_query = discovery.query(ingreds)
+    #ingreds = '|'.join([i for i in ingredients])
+	my_query = discovery.query(ingredients)
 	#return my_query['results']
     return my_query
 
