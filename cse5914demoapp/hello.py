@@ -91,10 +91,16 @@ def getIngredientsFromImage():
 	ingredientList = processImage(imagefile)
 	return jsonify(ingredientList)
 	
-@app.route('/getRecipes', methods=['GET'])
-def getRecipesFromIngredientsList():
+@app.route('/getExactRecipes', methods=['GET'])
+def getExactRecipesFromIngredientsList():
 	global ingredientsList
 	recipeList = getExactRecipes(ingredientsList)
+	return jsonify(recipeList)
+	
+@app.route('/getNearRecipes', methods=['GET'])
+def getNearRecipesFromIngredientsList():
+	global ingredientsList
+	recipeList = getNearRecipes(ingredientsList)
 	return jsonify(recipeList)
 	
 @app.route('/postIngredients', methods=['POST'])
@@ -120,6 +126,7 @@ def getAnswerToQuestion():
 	
 @app.route('/getSelected', methods=['GET'])
 def getSelectedRecipe():
+	global selectedRecipe
 	return jsonify(selectedRecipe)
 	
 @app.route('/page/<string:page_name>/')

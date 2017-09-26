@@ -1,5 +1,5 @@
 <html>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link href="https://bootswatch.com/united/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
@@ -207,28 +207,29 @@ h2{
 	
 -->
 	
-	<div class="col-sm-6 animated fadeInUp first">
+	<div class="col-lg-6 col-md-12 col-sm-12 animated fadeInUp first">
 		<h1>Enter ingredients: </h1>
 
 		
 		
 		<ul class="list-group animated fadeInUp second">
-		  <li class="list-group-item justify-content-between" ng-repeat="ingredient in ctrl.ingredients">
+		  <li class="list-group-item justify-content-between" ng-repeat="ingredient in ctrl.ingredients track by $index">
 			{{ '{{ingredient}}' }}
 			<span ng-click="ctrl.removeIngredient($index)" style="cursor:pointer;" class="badge">x</span>
 		  </li>
 		</ul>
 		
+		<form ng-submit="ctrl.addIngredient()">
 		<div class="form-group animated fadeInUp second">
 		  <div class="input-group">
 			<span class="input-group-addon">+</span>
-			<input type="text" class="form-control" ng-model="ctrl.newIngredient" placeholder="Add items here">
+			<input type="text" class="form-control" ng-model="ctrl.newIngredient" placeholder="Add items here" required="">
 			<span class="input-group-btn">
-			  <button class="btn btn-success" type="submit" ng-click="ctrl.addIngredient()">Add</button>
+			  <button class="btn btn-success" type="submit">Add</button>
 			</span>
 		  </div>
 		</div>
-		
+		</form>
 		<a href="/page/cards" ng-show="ctrl.ingredients.length > 0" class="btn btn-default more-buffer animated fadeInUp">
 		Next
 		</a>

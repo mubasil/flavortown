@@ -37,7 +37,7 @@ background-color: #C0392B;
 
 .second {
 
- -webkit-animation-delay: 3s;
+ -webkit-animation-delay: 1s;
 
 }
 
@@ -182,13 +182,38 @@ h3{
 
 <body ng-app="myApp" ng-controller="ctrl as ctrl">
 
-	<div class="col-sm-6" ng-init="ctrl.getRecipes()">
+	<div class="col-lg-6 col-sm-12 col-md-12" ng-init="ctrl.getRecipes()">
+		
 		<div class="row">
-			<h1 ng-animate="">Here are some recipes I found: </h1>
+			<h1 ng-animate="" ng-show="ctrl.loadingR">Loading recipes...</h1>
+			<h1 ng-animate="" ng-hide="ctrl.loadingR || ctrl.recipes.length > 0">No recipes found.</h1>
+			<h1 ng-animate="" ng-show="ctrl.recipes.length > 0">Here are some recipes I found: </h1>
 		</div>
 		<div class="row more-buffer">
 		    <div ng-repeat="recipe in ctrl.recipes track by $index">
-			<a ng-href="/page/recipe" ng-click="ctrl.selectRecipe($index)">
+			<a ng-click="ctrl.selectRecipe($index)">
+			<div class="col-md-4">
+                <div class="card">
+                    <img class="card-img-top" ng-src="{{ '{{recipe.Image}}' }}">
+                    <div class="card-block">
+                        <h5 >{{ '{{recipe.Recipe}}' }}</h5>
+                    </div>
+                </div>
+            </div>
+			</a>
+			</div>
+		</div>
+	</div>
+	
+	<div class="col-sm-6">
+		<div class="row">
+			<h1 ng-animate="" ng-show="ctrl.loadingN">Loading recipes...</h1>
+			<h1 ng-animate="" ng-hide="ctrl.loadingN || ctrl.recipes.length > 0">No close recipes found.</h1>
+			<h1 ng-animate="" ng-show="ctrl.nearRecipes.length > 0">With one more ingredient, you could make: </h1>
+		</div>
+		<div class="row more-buffer">
+		    <div ng-repeat="recipe in ctrl.nearRecipes track by $index">
+			<a ng-click="ctrl.selectNearRecipe($index)">
 			<div class="col-md-4">
                 <div class="card"">
                     <img class="card-img-top" ng-src="{{ '{{recipe.Image}}' }}">

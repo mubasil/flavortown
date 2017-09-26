@@ -3,7 +3,9 @@ app.controller('ctrl', function($http, $scope) {
 	
 	var self = this;
 	self.recipes = [];
-	
+	self.nearRecipes = [];
+	self.loadingR = true;
+	self.loadingN = true;
     self.ingredients = [];
 	self.imageFile = "";
 	self.selectedRecipe = {};
@@ -34,13 +36,19 @@ self.addIngredient= function(){
 }
 
 self.getRecipes = function(){
-      
-	$http.get("/getRecipes")
+    
+	self.loadingR = true;
+	$http.get("/getExactRecipes")
     .then(function(d) {
         self.recipes = self.recipes.concat(d.data);
-		for(var i =0; i < self.recipes.length; i++){
-			self.recipes[i].style = " " + (i + 2) + "s;";
-		}
+		self.loadingR = false;
+    });	
+	
+	$http.get("/getNearRecipes")
+    .then(function(d) {
+        self.nearRecipes = self.nearRecipes.concat(d.data);
+
+		self.loadingN=false;
 
     });	
 	
@@ -73,7 +81,20 @@ self.selectRecipe = function(id){
 	
 	$http.post("/selectRecipe", self.selectedRecipe)
     .then(function(d) {
-        
+                    window.location='/page/recipe'
+
+    });	
+	
+}
+
+self.selectNearRecipe = function(id){
+	
+	self.selectedRecipe = self.nearRecipes[id];
+	
+	$http.post("/selectRecipe", self.selectedRecipe)
+    .then(function(d) {
+                    window.location='/page/recipe'
+
 
     });	
 	
