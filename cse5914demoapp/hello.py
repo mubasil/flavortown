@@ -22,14 +22,16 @@ selectedRecipe = {}
 
 
 #takes in a list of ingredients, returns list of possible recipes
-def getRecipes(ingredients):
+def getExactRecipes(ingredients):
 	discovery = Discovery()
-	#ingreds= ','.join([i for i in ingredients])
-    #ingreds = '|'.join([i for i in ingredients])
 	my_query = discovery.query(ingredients)
-	#return my_query['results']
-    return my_query
+	return my_query
 
+#takes in a list of ingredients, returns list of possible recipes
+def getNearRecipes(ingredients):
+    discovery = Discovery()
+    my_query = discovery.query(ingredients, False)
+    return my_query
 
 
 #takes in an image file and returns a list of ingredients in the image
@@ -92,7 +94,7 @@ def getIngredientsFromImage():
 @app.route('/getRecipes', methods=['GET'])
 def getRecipesFromIngredientsList():
 	global ingredientsList
-	recipeList = getRecipes(ingredientsList)
+	recipeList = getExactRecipes(ingredientsList)
 	return jsonify(recipeList)
 	
 @app.route('/postIngredients', methods=['POST'])
