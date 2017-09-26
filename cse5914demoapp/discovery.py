@@ -2,7 +2,6 @@ import sys
 import os
 import json
 import watson_developer_cloud
-import itertools
 from watson_developer_cloud import DiscoveryV1
 from fuzzywuzzy import process
 
@@ -16,6 +15,7 @@ class Discovery(object):
         )
 
     def query(self, ingredients, exact=True):
+        self.ingredients = ingredients
         ingred_str = '|'.join([word for word in ingredients])
         query_str = "Ingredients:" + ingred_str
         qopts = {'query': query_str, 'count':1000}
@@ -48,7 +48,7 @@ class Discovery(object):
         trimmed_results = []
         for recipe in results:
             lst = recipe['Ingredients']
-            if self.isMember(lst, ingredients): trimmed_results.append(recipe)
+            if self.isMember(lst, self.ingredients): trimmed_results.append(recipe)
         return trimmed_results
 
     #take the response from Watson and only keep recipes that one ingredient from being a perfect match
@@ -56,33 +56,5 @@ class Discovery(object):
         trimmed_results = []
         for recipe in results:
             lst = recipe['Ingredients']
-            if self.isNearMember(lst, ingredients): trimmed_results.append(recipe)
+            if self.isNearMember(lst, self.ingredients): trimmed_results.append(recipe)
         return trimmed_results
-
-
-discovery = Discovery()
-ingredients =['apple', 'celery', 'walnuts', 'raisins', 'mayonnaise','onion', 
-    'olive oil', 'vegetable oil', 'paprika', 'mushrooms', 'chicken broth', 'sausage', 'chicken breast', 'avocado']
-my_query = discovery.query(ingredients, False) 
-print(json.dumps(my_query, indent=2))
-
-
-
-
-
-# x = len(ingredients)
-# while x > 0:
-#   combo = itertools.combinations(ingredients,x)
-#   x -= 1
-#   recipe_found = False
-#   for c in combo:
-#     ingred_str = ','.join([word for word in c])
-#     my_query = discovery.query(ingred_str)
-#     if my_query['matching_results'] > 0:
-#       print(json.dumps(my_query, indent=2))
-#       recipe_found = True
-#   if recipe_found:
-#     break
-
-
-

@@ -5,8 +5,7 @@ import cf_deployment_tracker
 import os
 import json
 import sys
-import watson_developer_cloud
-from watson_developer_cloud import DiscoveryV1
+from discovery import Discovery 
 
 # Emit Bluemix deployment event
 cf_deployment_tracker.track()
@@ -23,18 +22,16 @@ selectedRecipe = {}
 
 
 #takes in a list of ingredients, returns list of possible recipes
-def getRecipes(ingredients):
-	discovery = DiscoveryV1(    
-        username='ff7c4fbe-e752-4c91-b99e-7f7db797e294',
-        password='E3qe7yeI5Nrf',
-        version='2017-09-01'
-	)
-	ingred_str = ','.join([i for i in ingredients])
-	query_str = "Ingredients:" + ingred_str
-	qopts = {'query': query_str}
-	my_query = discovery.query('0a15c836-8ec9-41ca-a33b-93a9d63dae8d', '7844f79c-c259-4a3d-a2d8-2db7d18acd76', qopts)
-	return my_query['results']
+def getExactRecipes(ingredients):
+	discovery = Discovery()
+	my_query = discovery.query(ingredients)
+	return my_query
 
+#takes in a list of ingredients, returns list of possible recipes
+def getNearRecipes(ingredients):
+    discovery = Discovery()
+    my_query = discovery.query(ingredients, False)
+    return my_query
 
 
 #takes in an image file and returns a list of ingredients in the image
@@ -97,7 +94,7 @@ def getIngredientsFromImage():
 @app.route('/getRecipes', methods=['GET'])
 def getRecipesFromIngredientsList():
 	global ingredientsList
-	recipeList = getRecipes(ingredientsList)
+	recipeList = getExactRecipes(ingredientsList)
 	return jsonify(recipeList)
 	
 @app.route('/postIngredients', methods=['POST'])
