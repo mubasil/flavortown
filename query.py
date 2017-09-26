@@ -16,6 +16,7 @@ class Discovery(object):
         )
 
     def query(self, ingredients, exact=True):
+        self.ingredients = ingredients
         ingred_str = '|'.join([word for word in ingredients])
         query_str = "Ingredients:" + ingred_str
         qopts = {'query': query_str, 'count':1000}
@@ -30,8 +31,9 @@ class Discovery(object):
         misses = 0
         for ingredient in c:
             match = process.extractOne(ingredient, p)
-            if match[1] < 90: misses = misses + 1
-            if misses > 0: return False
+            if match[1] < 90: return False
+            #if match[1] < 90: misses = misses + 1
+            #if misses > 0: return False
         return True
 
     def isNearMember(self, c, p):
@@ -40,15 +42,15 @@ class Discovery(object):
             match = process.extractOne(ingredient, p)
             if match[1] < 90: misses = misses + 1
             if misses > 1: return False
-        if misses == 1: return True
-        else: return False
+        if misses == 0: return False
+        else: return True
 
     #take the response from Watson and only keep recipes that are a good match
     def processExactMatches(self, results):
         trimmed_results = []
         for recipe in results:
             lst = recipe['Ingredients']
-            if self.isMember(lst, ingredients): trimmed_results.append(recipe)
+            if self.isMember(lst, self.ingredients): trimmed_results.append(recipe)
         return trimmed_results
 
     #take the response from Watson and only keep recipes that one ingredient from being a perfect match
@@ -56,17 +58,23 @@ class Discovery(object):
         trimmed_results = []
         for recipe in results:
             lst = recipe['Ingredients']
-            if self.isNearMember(lst, ingredients): trimmed_results.append(recipe)
+            if self.isNearMember(lst, self.ingredients): trimmed_results.append(recipe)
         return trimmed_results
 
 
 discovery = Discovery()
-ingredients =['apple', 'celery', 'walnuts', 'raisins', 'mayonnaise','onion', 
-    'olive oil', 'vegetable oil', 'paprika', 'mushrooms', 'chicken broth', 'sausage', 'chicken breast', 'avocado']
-my_query = discovery.query(ingredients, False) 
+ingredients1 =['apple', 'celery', 'walnuts', 'raisins', 'mayonnaise','onion', 
+    'olive oil', 'vegetable oil', 'paprika', 'mushrooms', 'chicken broth',
+     'sausage', 'chicken breast', 'avocado']
+
+ingredients2 = ['salt', 'pepper', 'sugar', 'cider vinegar', 'soy sauce', 'ramen noodles',
+    'butter', 'broccoli', 'lettuce', 'green onion', 'walnuts', 'vegetable oil',
+     'water', 'strawberries', 'flank steak', 'green beans']
+my_query = discovery.query(ingredients2) 
 print(json.dumps(my_query, indent=2))
-
-
+my_query = discovery.query(ingredients2, False)
+print'Near Misses'
+print(json.dumps(my_query, indent=2))
 
 
 
