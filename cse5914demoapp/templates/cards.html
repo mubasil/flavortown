@@ -7,6 +7,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular-animate.js"></script>
 <script src="{{ url_for('static', filename='app_controller.js')}}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <style>
 
@@ -184,8 +185,10 @@ h3{
 
 	<div class="col-lg-6 col-sm-12 col-md-12" ng-init="ctrl.getRecipes()">
 		
+		<h1><span class="glyphicon glyphicon-arrow-left"></span></h1>
+
 		<div class="row">
-			<h1 ng-animate="" ng-show="ctrl.loadingR">Loading recipes...</h1>
+			<h1 ng-animate="" ng-show="ctrl.loadingR"><i class="fa fa-circle-o-notch fa-spin" style="font-size:36px"></i></h1>
 			<h1 ng-animate="" ng-hide="ctrl.loadingR || ctrl.recipes.length > 0">No recipes found.</h1>
 			<h1 ng-animate="" ng-show="ctrl.recipes.length > 0">Here are some recipes I found: </h1>
 		</div>
@@ -207,7 +210,7 @@ h3{
 	
 	<div class="col-sm-6">
 		<div class="row">
-			<h1 ng-animate="" ng-show="ctrl.loadingN">Loading recipes...</h1>
+			<h1 ng-animate="" ng-show="ctrl.loadingN"><i class="fa fa-circle-o-notch fa-spin" style="font-size:36px"></i></h1>
 			<h1 ng-animate="" ng-hide="ctrl.loadingN || ctrl.recipes.length > 0">No close recipes found.</h1>
 			<h1 ng-animate="" ng-show="ctrl.nearRecipes.length > 0">With one more ingredient, you could make: </h1>
 		</div>
