@@ -5,7 +5,7 @@ from quantities import units
 class Recipe(object):
 	
 	def __init__(self, recipeInfo):      
-		self.directions = recipeInfo['Directions']
+		self.directions = Recipe.preprocessDirections(recipeInfo['Directions'])
 		self.image = recipeInfo['Image']
 		self.title = recipeInfo['Recipe']
 		self.ingredients = recipeInfo['Ingredients']
@@ -47,7 +47,22 @@ class Recipe(object):
 
 	def getInfo(self):
 		return self.recipeInfo
-		
-		
+
+	@staticmethod
+	def preprocessDirections(directions):
+		final = []
+		directions = [d.replace('in.','in') for d in directions]
+		for d in directions:
+			for x in d.split('. '):
+				final.append(x) if x.endswith('.') else final.append(x +'.')
+		return final
+
+''' TESTING DIRECTIONS PREPROCESSING METHOD		
+json_data = open('exrecipe.json').read()
+rec_dict = json.loads(json_data)
+rec = Recipe(rec_dict)
+for d in rec.directions:
+	print d +"\n" '''
+
 		
 		
