@@ -6,6 +6,7 @@ import os
 import json
 import sys
 from discovery import Discovery 
+from recipe import Recipe
 
 # Emit Bluemix deployment event
 cf_deployment_tracker.track()
@@ -46,10 +47,31 @@ def processImage(imagefile):
 
 #takes in a text query, returns a text and voice answer
 def answerQuery(query):
-
+	global selectedRecipe
 	answer = {'text':'', 'voice':''}
 	
-	#TODO logic
+	#TODO to perform NLC on query
+	
+	#possible options:
+	
+	#Read the current step
+	answer['text'] = selectedRecipe.getCurrentDirection()
+	
+	#Read the next step
+	answer['text'] = selectedRecipe.goForward()
+	
+	#Read the previous step 
+	answer['text'] = selectedRecipe.goBack()
+	
+	#Read a specific step (query~"What was the first step?")
+	answer['text'] = selectedRecipe.getSpecificDirection(index)
+
+	
+	#Find out current ingredient (query~"How much of that?")
+	answer['text'] = selectedRecipe.getIngredientFromCurrentDirection()
+	
+	
+	#TODO fill in voice with Text to Speech
 	
 	return answer
 
@@ -114,8 +136,8 @@ def postIngredients():
 def selectRecipe():
 	global selectedRecipe
 	content = request.get_json(silent=True)
-	selectedRecipe = content
-	return jsonify(selectedRecipe)
+	selectedRecipe = Recipe(content)
+	return jsonify(selectedRecipe.getInfo())
 	
 @app.route('/getAnswer', methods=['POST'])
 def getAnswerToQuestion():
@@ -127,7 +149,7 @@ def getAnswerToQuestion():
 @app.route('/getSelected', methods=['GET'])
 def getSelectedRecipe():
 	global selectedRecipe
-	return jsonify(selectedRecipe)
+	return jsonify(selectedRecipe.getInfo())
 	
 @app.route('/page/<string:page_name>/')
 def render_static(page_name):
