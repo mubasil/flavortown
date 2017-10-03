@@ -64,6 +64,8 @@ def answerQuery(query):
 	answer['text'] = selectedRecipe.goBack()
 	
 	#Read a specific step (query~"What was the first step?")
+	#TODO determine what step index was requested
+	index = 0
 	answer['text'] = selectedRecipe.getSpecificDirection(index)
 
 	
@@ -137,7 +139,7 @@ def selectRecipe():
 	global selectedRecipe
 	content = request.get_json(silent=True)
 	selectedRecipe = Recipe(content)
-	return jsonify(selectedRecipe.getInfo())
+	return jsonify(selectedRecipe.recipeInfo)
 	
 @app.route('/getAnswer', methods=['POST'])
 def getAnswerToQuestion():
@@ -149,7 +151,7 @@ def getAnswerToQuestion():
 @app.route('/getSelected', methods=['GET'])
 def getSelectedRecipe():
 	global selectedRecipe
-	return jsonify(selectedRecipe.getInfo())
+	return jsonify(selectedRecipe.recipeInfo)
 	
 @app.route('/page/<string:page_name>/')
 def render_static(page_name):
