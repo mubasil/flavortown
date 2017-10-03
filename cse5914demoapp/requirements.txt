@@ -5,6 +5,5 @@ watson_developer_cloud
 nltk
 quantities
 fuzzywuzzy[speedup]
-google-api-python-client
 urllib2
 bs4
