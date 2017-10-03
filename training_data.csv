@@ -1,0 +1,41 @@
+What do I do now?,current
+What am I supposed to do?,current
+Wait what?,current
+Say that again,current
+Repeat that step,current
+
+What should I do next?,next
+What is the next step?,next
+What comes next?,next
+Go on,next
+
+What was the last step?,previous
+Tell me the previous step,previous
+Go back,previous
+
+What is the first step?,specific
+What is the second step?,specific
+What is the third step?,specific
+
+How do I chop an onion?,howto
+How do I stuff a turkey?,howto
+How do I slice a tomato?,howto
+
+What temperature should I set the oven at?,directions
+How long should I bake it for?,directions
+How long should I cook it for?,directions
+
+How many ingredients do I need?,ingredients
+What is the ingredients list?,ingredients
+How much water do I need?,ingredients
+How much sugar should I add?,ingredients
+
+How many teaspoons are in a tablespoon?,measurement
+How many tablespoons are in a cup?,measurement
+How many fluid ounces are in a cup?,measurement
+How many milliliters is a cup?,measurement
+How many millilliters is one fluid ounce?,measurement
+How many cups are in a liter?,measurement
+What is 180 degrees Celsius in Fahrenheit?,measurement
+How many ounces is a kilogram?,measurement
+How many ounces are a pound?,measurement
