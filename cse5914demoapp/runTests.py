@@ -1,4 +1,4 @@
-from hello import getRecipes, processImage, answerQuery
+from hello import getExactRecipes, getNearRecipes, processImage, answerQuery
 from recipe import Recipe
 import json
 
@@ -17,11 +17,11 @@ import json
 
 def getRecipes_has_result():
 	sampleIngredientsList = ['apple', 'banana']
-	assert getRecipes(sampleIngredientsList) is not None
+	assert getExactRecipes(sampleIngredientsList) is not None
 
 def getRecipes_from_apple():
 	sampleIngredientsList = ['apple']
-	recipeList = getRecipe(sampleIngredientsList)
+	recipeList = getExactRecipes(sampleIngredientsList)
 	for recipe in recipeList:
 		assert 'apple' in recipe.get('Ingredients')
 	display_recipe_list(recipeList)
