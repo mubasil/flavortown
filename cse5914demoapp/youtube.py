@@ -1,4 +1,3 @@
-import urllib
 import urllib2
 from bs4 import BeautifulSoup
 
@@ -6,7 +5,7 @@ class Youtube(object):
 
     @staticmethod
     def getVideo(phrase):
-        query = urllib.quote(phrase)
+        query = urllib2.quote(phrase)
         url = "https://www.youtube.com/results?search_query=" + query
         response = urllib2.urlopen(url)
         html = response.read()
