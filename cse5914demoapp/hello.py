@@ -79,11 +79,11 @@ def answerQuery(query):
 		#Find out current ingredient (query~"How much of that?")
 		answer['text'] = selectedRecipe.getIngredientFromCurrentDirection()
 	
-	elif my_class == "conversion":
-		#Perform conversion
+	#elif my_class == "conversion":
+		#TODO Perform conversion
 
-	elif my_class == "howto":
-		#Howto logic	
+	#elif my_class == "howto":
+		#TODO howto logic	
 
 
 	#TODO fill in voice with Text to Speech
