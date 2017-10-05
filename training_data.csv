@@ -30,12 +30,12 @@ What is the ingredients list?,ingredients
 How much water do I need?,ingredients
 How much sugar should I add?,ingredients
 
-How many teaspoons are in a tablespoon?,measurement
-How many tablespoons are in a cup?,measurement
-How many fluid ounces are in a cup?,measurement
+How many teaspoons are in a tablespoon?,conversion
+How many tablespoons are in a cup?,conversion
+How many fluid ounces are in a cup?,conversion
 How many milliliters is a cup?,measurement
-How many millilliters is one fluid ounce?,measurement
-How many cups are in a liter?,measurement
-What is 180 degrees Celsius in Fahrenheit?,measurement
-How many ounces is a kilogram?,measurement
-How many ounces are a pound?,measurement
+How many millilliters is one fluid ounce?,conversion
+How many cups are in a liter?,conversion
+What is 180 degrees Celsius in Fahrenheit?,conversion
+How many ounces is a kilogram?,conversion
+How many ounces are a pound?,conversion

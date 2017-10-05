@@ -7,6 +7,7 @@ import json
 import sys
 from discovery import Discovery 
 from recipe import Recipe
+from watson_develepor_cloud import NaturalLanguageClassifierV1
 
 # Emit Bluemix deployment event
 cf_deployment_tracker.track()
@@ -47,31 +48,44 @@ def processImage(imagefile):
 
 #takes in a text query, returns a text and voice answer
 def answerQuery(query):
+
+	#assume here that "classifier" is created and trained
+
 	global selectedRecipe
 	answer = {'text':'', 'voice':''}
 	
 	#TODO to perform NLC on query
 	
+
+	classes = classifier.classify(classifier_id, query)
+	top_class = json.parse(classes)["top_class"]
+
 	#possible options:
 	
-	#Read the current step
-	answer['text'] = selectedRecipe.getCurrentDirection()
-	
-	#Read the next step
-	answer['text'] = selectedRecipe.goForward()
-	
-	#Read the previous step 
-	answer['text'] = selectedRecipe.goBack()
-	
-	#Read a specific step (query~"What was the first step?")
-	#TODO determine what step index was requested
-	index = 0
-	answer['text'] = selectedRecipe.getSpecificDirection(index)
+	if top_class == "current":
+		#Read the current step
+		answer['text'] = selectedRecipe.getCurrentDirection()
+	elif top_class == "next":	
+		#Read the next step
+		answer['text'] = selectedRecipe.goForward()
+	elif top_class == "previous":
+		#Read the previous step 
+		answer['text'] = selectedRecipe.goBack()
+	elif top_class == "specific":
+		#Read a specific step (query~"What was the first step?")
+		#TODO determine what step index was requested
+		index = 0
+		answer['text'] = selectedRecipe.getSpecificDirection(index)
 
 	
-	#Find out current ingredient (query~"How much of that?")
-	answer['text'] = selectedRecipe.getIngredientFromCurrentDirection()
+	elif top_class == "ingredient":
+		#Find out current ingredient (query~"How much of that?")
+		answer['text'] = selectedRecipe.getIngredientFromCurrentDirection()
 	
+
+	elif top_class == "conversion":
+		#Conversion logic
+
 	
 	#TODO fill in voice with Text to Speech
 	
