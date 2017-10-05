@@ -1,4 +1,3 @@
-import urllib
 import urllib2
 from bs4 import BeautifulSoup
 
@@ -6,7 +5,7 @@ class UnitConverter(object):
     
     @staticmethod
     def getConversion(request):
-        query = urllib.quote(request)
+        query = urllib2.quote(request)
         url = "https://www.google.com/search?q=" + query
         hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -30,5 +29,3 @@ class UnitConverter(object):
             unit = str(val) + " " + label
             conversion += (unit,)
         return conversion[0] + " = " + conversion[1]
-
-print UnitConverter.getConversion("How many oz in a pound")
