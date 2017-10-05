@@ -1,5 +1,5 @@
 import json
-import nltk
+from nltk import word_tokenize
 from quantities import units
 
 class Recipe(object):
