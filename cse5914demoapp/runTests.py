@@ -77,6 +77,10 @@ def answerQuery_has_result():
 
 getRecipes_has_result() 
 
-set_example_recipe()
-answerQuery_has_result()
+createRecipeWorks()
+getDirectionsFromRecipeWorks()
+moveCursorRecipeWorks()
+
+#set_example_recipe()
+#answerQuery_has_result()
 
