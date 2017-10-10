@@ -1,4 +1,5 @@
-from hello import *
+import hello
+from hello import getExactRecipes, getNearRecipes, processImage, answerQuery 
 from recipe import Recipe
 import json
 
