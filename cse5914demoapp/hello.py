@@ -8,6 +8,8 @@ import sys
 from discovery import Discovery 
 from recipe import Recipe
 from nlc import NLC
+from conversion import UnitConverter
+from youtube import Youtube
 
 # Emit Bluemix deployment event
 cf_deployment_tracker.track()
@@ -79,11 +81,11 @@ def answerQuery(query):
 		#Find out current ingredient (query~"How much of that?")
 		answer['text'] = selectedRecipe.getIngredientFromCurrentDirection()
 	
-	#elif my_class == "conversion":
-		#TODO Perform conversion
+	elif my_class == "conversion":
+		answer['text'] = UnitConverter.getConversion(query)
 
-	#elif my_class == "howto":
-		#TODO howto logic	
+	elif my_class == "howto":
+		answer['text'] = Youtube.getVideo(query)	
 
 
 	#TODO fill in voice with Text to Speech
