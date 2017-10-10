@@ -50,14 +50,14 @@ def getDirectionsFromRecipeWorks():
 	file = open("exrecipe.json", "r")
 	data = json.loads(file.read())
 	recipe = Recipe(data)
-	assert recipe.getCurrentDirection() == data['Direction'][0]
+	assert recipe.getCurrentDirection() == data['Directions'][0]
 	
 def moveCursorRecipeWorks():
 	file = open("exrecipe.json", "r")
 	data = json.loads(file.read())
 	recipe = Recipe(data)
-	assert recipe.goForward() == data['Direction'][1]
-	assert recipe.goBack() == data['Direction'][1]
+	assert recipe.goForward() == data['Directions'][1]
+	assert recipe.goBack() == data['Directions'][1]
 
 
 
