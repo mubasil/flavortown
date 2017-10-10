@@ -1,4 +1,4 @@
-import hello
+from hello import *
 from recipe import Recipe
 import json
 
