@@ -10,4 +10,4 @@ class NLC(object):
                 password='VRzaHN6O4AAE')
 
     def classify(self, request):
-        return self.classifier.classify('bbab2cx226-nlc-33450', request)['classes'][0]['class_name']
+        return self.classifier.classify('ebd15ex229-nlc-23509', request)['classes'][0]['class_name']
