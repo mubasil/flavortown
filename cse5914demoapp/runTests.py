@@ -1,4 +1,4 @@
-from hello import getExactRecipes, getNearRecipes, processImage, answerQuery
+import hello
 from recipe import Recipe
 import json
 
@@ -62,6 +62,11 @@ def moveCursorRecipeWorks():
 
 # answerQuery tests
 
+def set_example_recipe():
+	json_data = open('exrecipe.json').read()
+	rec_dict = json.loads(json_data)
+	hello.selectedRecipe = Recipe(rec_dict)
+
 def answerQuery_has_result():
 	sampleQuery = "How do I start?"
 	answer = answerQuery(sampleQuery)
@@ -70,4 +75,7 @@ def answerQuery_has_result():
 
 
 getRecipes_has_result() 
+
+set_example_recipe()
 answerQuery_has_result()
+
