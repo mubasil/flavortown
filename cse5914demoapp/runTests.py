@@ -70,3 +70,4 @@ def answerQuery_has_result():
 
 
 getRecipes_has_result() 
+answerQuery_has_result()
