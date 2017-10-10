@@ -42,19 +42,19 @@ def processImage_identify_apple():
 #recipe class tests
 def createRecipeWorks():
 	file = open("exrecipe.json", "r")
-	data = json.load(file.read())
+	data = json.loads(file.read())
 	recipe = Recipe(data)
 	assert recipe is not None
 	
 def getDirectionsFromRecipeWorks():
 	file = open("exrecipe.json", "r")
-	data = json.load(file.read())
+	data = json.loads(file.read())
 	recipe = Recipe(data)
 	assert recipe.getCurrentDirection() == data['Direction'][0]
 	
 def moveCursorRecipeWorks():
 	file = open("exrecipe.json", "r")
-	data = json.load(file.read())
+	data = json.loads(file.read())
 	recipe = Recipe(data)
 	assert recipe.goForward() == data['Direction'][1]
 	assert recipe.goBack() == data['Direction'][1]
