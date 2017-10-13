@@ -73,9 +73,31 @@ def answerQuery(query):
 		answer['text'] = selectedRecipe.goBack()
 	elif my_class == "specific":
 		#Read a specific step (query~"What was the first step?")
-		#TODO determine what step index was requested
-		index = 0
-		answer['text'] = selectedRecipe.getSpecificDirection(index)
+		words = query.split()
+		index = 0  
+		key_words = {
+			'first': 0,
+			'second': 1,
+			'third': 2,
+			'fourth': 3,
+			'fifth': 4,
+			'sixth': 5,
+			'seventh': 6,
+			'eighth': 7,
+			'ninth': 8,
+			'tenth': 9,
+			'eleventh': 10,
+			'twelfth': 11,
+			'last': len(selectedRecipe.directions) - 1
+		}
+		for word in words:
+			if word in key_words:
+				index = key_words[word]
+
+		if index > len(selectedRecipe.directions) - 1:
+			answer['text'] = "The recipe does not have that many steps" 
+		else:
+			answer['text'] = selectedRecipe.getSpecificDirection(index)      
 	
 	elif my_class == "ingredient":
 		#Find out current ingredient (query~"How much of that?")
