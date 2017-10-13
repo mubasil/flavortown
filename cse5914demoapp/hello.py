@@ -74,7 +74,7 @@ def answerQuery(query):
 	elif my_class == "specific":
 		#Read a specific step (query~"What was the first step?")
 		words = query.split()
-		index = 0  
+		index = -1  
 		key_words = {
 			'first': 0,
 			'second': 1,
@@ -94,7 +94,7 @@ def answerQuery(query):
 			if word in key_words:
 				index = key_words[word]
 
-		if index > len(selectedRecipe.directions) - 1:
+		if index > len(selectedRecipe.directions) - 1 or index < 0:
 			answer['text'] = "The recipe does not have that many steps" 
 		else:
 			answer['text'] = selectedRecipe.getSpecificDirection(index)      
