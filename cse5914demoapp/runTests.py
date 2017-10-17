@@ -1,4 +1,5 @@
-from hello import getExactRecipes, getNearRecipes, processImage, answerQuery
+import hello
+from hello import getExactRecipes, getNearRecipes, processImage, answerQuery 
 from recipe import Recipe
 import json
 
@@ -41,26 +42,38 @@ def processImage_identify_apple():
 #recipe class tests
 def createRecipeWorks():
 	file = open("exrecipe.json", "r")
-	data = json.load(file.read())
+	data = json.loads(file.read())
 	recipe = Recipe(data)
 	assert recipe is not None
 	
 def getDirectionsFromRecipeWorks():
 	file = open("exrecipe.json", "r")
-	data = json.load(file.read())
+	data = json.loads(file.read())
 	recipe = Recipe(data)
-	assert recipe.getCurrentDirection() == data['Direction'][0]
+	assert recipe.getCurrentDirection() == data['Directions'][0]
 	
 def moveCursorRecipeWorks():
 	file = open("exrecipe.json", "r")
-	data = json.load(file.read())
+	data = json.loads(file.read())
 	recipe = Recipe(data)
-	assert recipe.goForward() == data['Direction'][1]
-	assert recipe.goBack() == data['Direction'][1]
+
+    directions = Recipe.preprocessDirections(data['Directions'])
+
+	forward = recipe.goForward()
+	print(forward)
+	print(directions[1])
+
+	assert forward == directions[1]
+	assert recipe.goBack() == directions[0]
 
 
 
 # answerQuery tests
+
+def set_example_recipe():
+	json_data = open('exrecipe.json').read()
+	rec_dict = json.loads(json_data)
+	hello.selectedRecipe = Recipe(rec_dict)
 
 def answerQuery_has_result():
 	sampleQuery = "How do I start?"
@@ -70,4 +83,12 @@ def answerQuery_has_result():
 
 
 getRecipes_has_result() 
-answerQuery_has_result()
+
+createRecipeWorks()
+getDirectionsFromRecipeWorks()
+moveCursorRecipeWorks()
+
+#set_example_recipe()
+#answerQuery_has_result()
+
+
