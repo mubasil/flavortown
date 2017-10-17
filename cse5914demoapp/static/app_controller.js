@@ -99,5 +99,60 @@ self.selectNearRecipe = function(id){
     });	
 	
 }
+
+self.sendQuestion = function(query){
+	
+	$http.post("/ask", query)
+    .then(function(d) {
+            
+		self.addToChat(d['text'], "chatbox1", "chatbox2");
+		self.speak(d['audio']);
+    });	
+	
+}
+
+self.sendAudio = function(query){
+	
+	$http.post("/stt", query)
+    .then(function(d) {
+            
+		self.addToChat(d, "chatbox2", "chatbox1");
+		self.sendQuestion(d);
+
+    });	
+	
+}
+
+self.speak = function(audio) {
+	
+	//TODO
+	
+}
+
+
+self.addToChat = function(t, i, j){
+	
+	var br = document.createElement('br');
+	
+	var div = document.createElement('div');
+	div.className = 'list-group';
+
+    var div2 = document.createElement('div');
+	div.className = 'list-group-item clearfix';
+	
+	
+
+	var text = document.createTextNode(t);
+	
+	
+	div2.appendChild(text);
+	
+	div.appendChild(div2);
+
+    document.getElementById(i).appendChild(div);
+	document.getElementById(j).appendChild(br);
+	document.getElementById(j).appendChild(br);
+	document.getElementById(j).appendChild(br);
+}
 	
 });

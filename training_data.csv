@@ -3,39 +3,70 @@ What am I supposed to do?,current
 Wait what?,current
 Say that again,current
 Repeat that step,current
+repeat that,current
+could you say that again?,current
+again,current
+repeat,current
+what now,current
+say that again,current
+what do?,current
 
 What should I do next?,next
 What is the next step?,next
 What comes next?,next
 Go on,next
+next,next
+continue,next
+whas do I do next?,next
+move to the next step,next
+what now,next
+go forward,next
 
-What was the last step?,previous
+What was that last step?,previous
 Tell me the previous step,previous
 Go back,previous
+go back one step please,previous
+previous,previous
+what was the previous step,previous
 
 What is the first step?,specific
 What is the second step?,specific
 What is the third step?,specific
+go to the fifth step,specific
+go to step eight,specific
+last step please,specific
+first step,specific
+third step,specific
+what is the first step,specific
+second instruction,specific
 
 How do I chop an onion?,howto
 How do I stuff a turkey?,howto
 How do I slice a tomato?,howto
+I don't know how to do this step,howto
 
 What temperature should I set the oven at?,directions
 How long should I bake it for?,directions
 How long should I cook it for?,directions
+what temperature do I set the oven to,directions
 
 How many ingredients do I need?,ingredients
 What is the ingredients list?,ingredients
 How much water do I need?,ingredients
 How much sugar should I add?,ingredients
+tell me about the ingredients,ingredients
+what ingredient for this step,ingredients
+which ingredients,ingredients
 
-How many teaspoons are in a tablespoon?,measurement
-How many tablespoons are in a cup?,measurement
-How many fluid ounces are in a cup?,measurement
-How many milliliters is a cup?,measurement
-How many millilliters is one fluid ounce?,measurement
-How many cups are in a liter?,measurement
-What is 180 degrees Celsius in Fahrenheit?,measurement
-How many ounces is a kilogram?,measurement
-How many ounces are a pound?,measurement
+How many teaspoons are in a tablespoon?,conversion
+How many tablespoons are in a cup?,conversion
+How many fluid ounces are in a cup?,conversion
+How many milliliters is a cup?,conversion
+How many millilliters is one fluid ounce?,conversion
+How many cups are in a liter?,conversion
+What is 180 degrees Celsius in Fahrenheit?,conversion
+How many ounces is a kilogram?,conversion
+How many ounces are a pound?,conversion
+I want this in cups,conversion
+convert cups to ounces,conversion
+

@@ -1,21 +1,19 @@
-import urllib
 import urllib2
 from bs4 import BeautifulSoup
 
-class GoogleSearch(object):
-    def __init__(self, phrase):
-        google_query = query = urllib.quote(phrase)
-        self.url = "https://www.google.com/search?q=" + google_query
+class UnitConverter(object):
     
-
-    def search(self):
+    @staticmethod
+    def getConversion(request):
+        query = urllib2.quote(request)
+        url = "https://www.google.com/search?q=" + query
         hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
            'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
            'Accept-Encoding': 'none',
            'Accept-Language': 'en-US,en;q=0.8',
            'Connection': 'keep-alive'}
-        req = urllib2.Request(self.url, headers=hdr)
+        req = urllib2.Request(url, headers=hdr)
         try:
             page = urllib2.urlopen(req)
 
@@ -30,6 +28,4 @@ class GoogleSearch(object):
             label = units[1].find(selected="1").string
             unit = str(val) + " " + label
             conversion += (unit,)
-        return conversion
-g = GoogleSearch('how many teaspoons are in a tablespoon')
-print g.search()
+        return conversion[0] + " = " + conversion[1]

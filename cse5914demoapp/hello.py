@@ -6,7 +6,11 @@ import os
 import json
 import sys
 from discovery import Discovery 
+from speechtext import SpeechText
 from recipe import Recipe
+from nlc import NLC
+from conversion import UnitConverter
+from youtube import Youtube
 
 # Emit Bluemix deployment event
 cf_deployment_tracker.track()
@@ -20,6 +24,8 @@ db = None
 ingredientsList = []
 recipes = {}
 selectedRecipe = {}
+
+speech_text = SpeechText()
 
 
 #takes in a list of ingredients, returns list of possible recipes
@@ -47,33 +53,67 @@ def processImage(imagefile):
 
 #takes in a text query, returns a text and voice answer
 def answerQuery(query):
+
 	global selectedRecipe
 	answer = {'text':'', 'voice':''}
 	
 	#TODO to perform NLC on query
 	
+	nlc = NLC()
+
+	my_class = nlc.classify(query)
+
 	#possible options:
 	
-	#Read the current step
-	answer['text'] = selectedRecipe.getCurrentDirection()
-	
-	#Read the next step
-	answer['text'] = selectedRecipe.goForward()
-	
-	#Read the previous step 
-	answer['text'] = selectedRecipe.goBack()
-	
-	#Read a specific step (query~"What was the first step?")
-	#TODO determine what step index was requested
-	index = 0
-	answer['text'] = selectedRecipe.getSpecificDirection(index)
+	if my_class == "current":
+		#Read the current step
+		answer['text'] = selectedRecipe.getCurrentDirection()
+	elif my_class == "next":	
+		#Read the next step
+		answer['text'] = selectedRecipe.goForward()
+	elif my_class == "previous":
+		#Read the previous step 
+		answer['text'] = selectedRecipe.goBack()
+	elif my_class == "specific":
+		#Read a specific step (query~"What was the first step?")
+		words = query.split()
+		index = -1  
+		key_words = {
+			'first': 0,
+			'second': 1,
+			'third': 2,
+			'fourth': 3,
+			'fifth': 4,
+			'sixth': 5,
+			'seventh': 6,
+			'eighth': 7,
+			'ninth': 8,
+			'tenth': 9,
+			'eleventh': 10,
+			'twelfth': 11,
+			'last': len(selectedRecipe.directions) - 1
+		}
+		for word in words:
+			if word in key_words:
+				index = key_words[word]
 
+		if index > len(selectedRecipe.directions) - 1 or index < 0:
+			answer['text'] = "The recipe does not have that many steps" 
+		else:
+			answer['text'] = selectedRecipe.getSpecificDirection(index)      
 	
-	#Find out current ingredient (query~"How much of that?")
-	answer['text'] = selectedRecipe.getIngredientFromCurrentDirection()
+	elif my_class == "ingredient":
+		#Find out current ingredient (query~"How much of that?")
+		answer['text'] = selectedRecipe.getIngredientFromCurrentDirection()
 	
-	
-	#TODO fill in voice with Text to Speech
+	elif my_class == "conversion":
+		answer['text'] = UnitConverter.getConversion(query)
+
+	elif my_class == "howto":
+		answer['text'] = Youtube.getVideo(query)	
+
+
+	answer['audio']	= speech_text.speak_text(answer['text'])
 	
 	return answer
 
@@ -148,10 +188,18 @@ def getAnswerToQuestion():
 	request = answerQuery(query)
 	return jsonify(request)
 	
-@app.route('/getSelected', methods=['GET'])
-def getSelectedRecipe():
-	global selectedRecipe
-	return jsonify(selectedRecipe.recipeInfo)
+@app.route('/ask', methods=['POST'])
+def ask():
+	content = request.get_json(silent=True)
+	answer = answerQuery(content)
+	return jsonify(answer)
+
+@app.route('/stt', methods=['POST'])
+def stt():
+	global speech_text
+	content = request.get_json(silent=True)
+	audio = speech_text.transcribe_audio(content)
+	return jsonify(audio)
 	
 @app.route('/page/<string:page_name>/')
 def render_static(page_name):
