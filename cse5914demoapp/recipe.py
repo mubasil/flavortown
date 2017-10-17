@@ -1,6 +1,7 @@
 import json
 from nltk import word_tokenize
 from quantities import units
+from copy import deepcopy
 
 class Recipe(object):
 	
@@ -33,17 +34,36 @@ class Recipe(object):
 			return self.getCurrentDirection()
 		else:
 			return "That is the last step. " + self.getCurrentDirection()
+			
+	def isFraction(self, s):
+		values = s.split('/')
+		return len(values) == 2 and all(i.isdigit() for i in values)
 
 	def getIngredientFromCurrentDirection(self):
 		unitNames = [u.symbol for _, u in units.__dict__.items() if isinstance(u, type(units.deg))] + [u for u, f in u.__dict__.items() if isinstance(f, type(units.deg))]
 		matches = [0] * len(self.ingredients)
+		ingList = [deepcopy({'Val':"", 'Unit':"", 'Item':"", 'Text':""}) for i in range(len(self.ingredients))]
+		
 		for i in range(len(self.ingredients)):
-			for token in nltk.tokenize(self.ingredients[i]):
-				if token not in unitNames:
+			ingList[i]['Text'] = self.ingredients[i]
+			for token in word_tokenize(self.ingredients[i]):
+				if self.isFraction(token) or token.isnumeric():
+					ingList[i]['Val'] = token
+				elif token in unitNames:
+					ingList[i]['Unit'] = token
+				else:
+					ingList[i]['Item'] = ingList[i]['Item'] + " " + token
 					if token in self.getCurrentDirection():
 						matches[i] += 1
 		
-		return self.ingredients[matches.index(max(matches))]
+		print(matches)
+		
+		applicableIngredients = []
+		for i in range(len(ingList)):
+			if(matches[i] == max(matches)):
+				applicableIngredients.append(ingList[i])
+		
+		return applicableIngredients
 
 	def getInfo(self):
 		return self.recipeInfo
@@ -57,6 +77,8 @@ class Recipe(object):
 				final.append(x) if x.endswith('.') else final.append(x +'.')
 		return final
 
+	
+	
 ''' TESTING DIRECTIONS PREPROCESSING METHOD		
 json_data = open('exrecipe.json').read()
 rec_dict = json.loads(json_data)
