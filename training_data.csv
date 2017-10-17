@@ -10,7 +10,7 @@ repeat,current
 what now,current
 say that again,current
 what do?,current
-
+,
 What should I do next?,next
 What is the next step?,next
 What comes next?,next
@@ -21,14 +21,16 @@ whas do I do next?,next
 move to the next step,next
 what now,next
 go forward,next
-
+got it,next
+what next,next
+,
 What was that last step?,previous
 Tell me the previous step,previous
 Go back,previous
 go back one step please,previous
 previous,previous
 what was the previous step,previous
-
+,
 What is the first step?,specific
 What is the second step?,specific
 What is the third step?,specific
@@ -39,17 +41,19 @@ first step,specific
 third step,specific
 what is the first step,specific
 second instruction,specific
-
+,
 How do I chop an onion?,howto
 How do I stuff a turkey?,howto
 How do I slice a tomato?,howto
 I don't know how to do this step,howto
-
+,
 What temperature should I set the oven at?,directions
 How long should I bake it for?,directions
 How long should I cook it for?,directions
 what temperature do I set the oven to,directions
-
+,
+,
+,
 How many ingredients do I need?,ingredients
 What is the ingredients list?,ingredients
 How much water do I need?,ingredients
@@ -57,7 +61,14 @@ How much sugar should I add?,ingredients
 tell me about the ingredients,ingredients
 what ingredient for this step,ingredients
 which ingredients,ingredients
-
+how much of that,ingredients
+how much of those,ingredients
+how much do I need again,ingredients
+what do I need again,ingredients
+what do I need to mix again,ingredients
+what do I need to add again,ingredients
+how much do I need to add,ingredients
+,
 How many teaspoons are in a tablespoon?,conversion
 How many tablespoons are in a cup?,conversion
 How many fluid ounces are in a cup?,conversion
@@ -69,4 +80,3 @@ How many ounces is a kilogram?,conversion
 How many ounces are a pound?,conversion
 I want this in cups,conversion
 convert cups to ounces,conversion
-
