@@ -57,13 +57,14 @@ def moveCursorRecipeWorks():
 	data = json.loads(file.read())
 	recipe = Recipe(data)
 
+    directions = Recipe.preprocessDirections(data['Directions'])
+
 	forward = recipe.goForward()
 	print(forward)
-	print("\n")
-	print(data['Directions'][1])
+	print(directions[1])
 
-	assert forward == data['Directions'][1]
-	assert recipe.goBack() == data['Directions'][1]
+	assert forward == directions[1]
+	assert recipe.goBack() == directions[0]
 
 
 
