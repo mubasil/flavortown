@@ -12,6 +12,8 @@ from recipe import Recipe
 from nlc import NLC
 from conversion import UnitConverter
 from youtube import Youtube
+from quantities import units
+
 
 # Emit Bluemix deployment event
 cf_deployment_tracker.track()
@@ -56,7 +58,7 @@ def processImage(imagefile):
 def answerQuery(query):
 
 	global selectedRecipe
-	answer = {'text':'', 'voice':''}
+	answer = {'text':"Sorry, I didn't get that", 'voice':''}
 	
 	#TODO to perform NLC on query
 	
@@ -111,11 +113,14 @@ def answerQuery(query):
 			answer['text'] = answer['text'] + " and " + ing['Text']
 	
 	elif my_class == "conversion":
+		unitNames = [u.symbol for _, u in units.__dict__.items() if isinstance(u, type(units.deg))] + [u for u, f in u.__dict__.items() if isinstance(f, type(units.deg))]
+
 		answer['text'] = UnitConverter.getConversion(query)
 
 	elif my_class == "howto":
 		answer['text'] = Youtube.getVideo(query)	
 
+	
 	
 	return answer
 
