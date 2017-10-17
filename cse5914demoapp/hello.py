@@ -6,6 +6,7 @@ import os
 import json
 import sys
 from discovery import Discovery 
+from speechtext import SpeechText
 from recipe import Recipe
 from nlc import NLC
 from conversion import UnitConverter
@@ -23,6 +24,8 @@ db = None
 ingredientsList = []
 recipes = {}
 selectedRecipe = {}
+
+speech_text = SpeechText()
 
 
 #takes in a list of ingredients, returns list of possible recipes
@@ -110,7 +113,7 @@ def answerQuery(query):
 		answer['text'] = Youtube.getVideo(query)	
 
 
-	#TODO fill in voice with Text to Speech
+	answer['audio']	= speech_text.speak_text(answer['text'])
 	
 	return answer
 
@@ -185,10 +188,18 @@ def getAnswerToQuestion():
 	request = answerQuery(query)
 	return jsonify(request)
 	
-@app.route('/getSelected', methods=['GET'])
-def getSelectedRecipe():
-	global selectedRecipe
-	return jsonify(selectedRecipe.recipeInfo)
+@app.route('/ask', methods=['POST'])
+def ask():
+	content = request.get_json(silent=True)
+	answer = answerQuery(content)
+	return jsonify(answer)
+
+@app.route('/stt', methods=['POST'])
+def stt():
+	global speech_text
+	content = request.get_json(silent=True)
+	audio = speech_text.transcribe_audio(content)
+	return jsonify(audio)
 	
 @app.route('/page/<string:page_name>/')
 def render_static(page_name):
