@@ -18,7 +18,7 @@ class SpeechText(object):
         )
 
     def transcribe_audio(audio_file):
-        return STT.recognize(audio_file, content_type=’audio/wav’)
+        return STT.recognize(audio_file, content_type='audio/wav')
 
     def speak_text(text):
-		return TTS.recognize(audio_file, content_type=’audio/wav’)
+		return TTS.recognize(audio_file, content_type='audio/wav')
