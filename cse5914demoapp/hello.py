@@ -103,7 +103,7 @@ def answerQuery(query):
 		else:
 			answer['text'] = selectedRecipe.getSpecificDirection(index)      
 	
-	elif my_class == "ingredient":
+	elif my_class == "ingredients":
 		#Find out current ingredient (query~"How much of that?")
 		relaventIngredients = selectedRecipe.getIngredientFromCurrentDirection()
 		answer['text'] = relaventIngredients.pop()['Text']
@@ -213,6 +213,10 @@ def tts():
 	global speech_text
 	content = request.get_json(silent=True)
 	audio = speech_text.speak_text(content['textInfo'])
+	buf = StringIO()
+    audio.save(buf, 'WAV', quality=70)
+    img_io.seek(0)
+    return send_file(img_io, mimetype='image/jpeg')
 	return send_file(audio, attachment_filename="testing.wav", as_attachment=True)
 
 	
