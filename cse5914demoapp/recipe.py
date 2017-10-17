@@ -55,9 +55,7 @@ class Recipe(object):
 					ingList[i]['Item'] = ingList[i]['Item'] + " " + token
 					if token in self.getCurrentDirection():
 						matches[i] += 1
-		
-		print(matches)
-		
+				
 		applicableIngredients = []
 		for i in range(len(ingList)):
 			if(matches[i] == max(matches)):

@@ -10,6 +10,7 @@ app.controller('ctrl', function($http, $scope) {
 	self.imageFile = "";
 	self.selectedRecipe = {};
 	self.newIngredient = "";
+	self.queryText = "";
 	
 	
 self.getIngredients = function(){
@@ -100,25 +101,48 @@ self.selectNearRecipe = function(id){
 	
 }
 
-self.sendQuestion = function(query){
+self.sendQuestion = function(){
 	
+	var query = {textInfo:self.queryText};
+	self.queryText = "";
+	
+	self.addToChat(query.textInfo, "chatbox2", "chatbox1");
+
 	$http.post("/ask", query)
     .then(function(d) {
-            
+		d = d['data'];
+        console.log(d);
 		self.addToChat(d['text'], "chatbox1", "chatbox2");
-		self.speak(d['audio']);
+		self.getAudio(d['text']);
     });	
 	
 }
+
+
+self.getAudio = function(query){
+	
+	var q = {textInfo:query};
+
+	$http.post("/tts", q)
+    .then(function(d) {
+           
+		console.log(d);
+		var audio = new Audio(d);
+		audio.play();
+		
+    });	
+	
+}
+
+
 
 self.sendAudio = function(query){
 	
 	$http.post("/stt", query)
     .then(function(d) {
             
-		self.addToChat(d, "chatbox2", "chatbox1");
-		self.sendQuestion(d);
-
+		self.queryText = d;
+		
     });	
 	
 }

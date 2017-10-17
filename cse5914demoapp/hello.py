@@ -1,5 +1,6 @@
 from cloudant import Cloudant
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_file
+import StringIO
 import atexit
 import cf_deployment_tracker
 import os
@@ -102,9 +103,12 @@ def answerQuery(query):
 		else:
 			answer['text'] = selectedRecipe.getSpecificDirection(index)      
 	
-	elif my_class == "ingredient":
+	elif my_class == "ingredients":
 		#Find out current ingredient (query~"How much of that?")
-		answer['text'] = selectedRecipe.getIngredientFromCurrentDirection()
+		relaventIngredients = selectedRecipe.getIngredientFromCurrentDirection()
+		answer['text'] = relaventIngredients.pop()['Text']
+		for ing in relaventIngredients:
+			answer['text'] = answer['text'] + " and " + ing['Text']
 	
 	elif my_class == "conversion":
 		answer['text'] = UnitConverter.getConversion(query)
@@ -112,8 +116,6 @@ def answerQuery(query):
 	elif my_class == "howto":
 		answer['text'] = Youtube.getVideo(query)	
 
-
-	answer['audio']	= speech_text.speak_text(answer['text'])
 	
 	return answer
 
@@ -181,6 +183,11 @@ def selectRecipe():
 	selectedRecipe = Recipe(content)
 	return jsonify(selectedRecipe.recipeInfo)
 	
+@app.route('/getSelected', methods=['GET'])
+def getSelected():
+	global selectedRecipe
+	return jsonify(selectedRecipe.recipeInfo)
+	
 @app.route('/getAnswer', methods=['POST'])
 def getAnswerToQuestion():
 	content = request.get_json(silent=True)
@@ -191,15 +198,27 @@ def getAnswerToQuestion():
 @app.route('/ask', methods=['POST'])
 def ask():
 	content = request.get_json(silent=True)
-	answer = answerQuery(content)
+	answer = answerQuery(content['textInfo'])
 	return jsonify(answer)
 
 @app.route('/stt', methods=['POST'])
 def stt():
 	global speech_text
 	content = request.get_json(silent=True)
-	audio = speech_text.transcribe_audio(content)
-	return jsonify(audio)
+	txt = speech_text.transcribe_audio(content)
+	return jsonify(txt)
+	
+@app.route('/tts', methods=['POST'])
+def tts():
+	global speech_text
+	content = request.get_json(silent=True)
+	audio = speech_text.speak_text(content['textInfo'])
+	buf = StringIO()
+    audio.save(buf, 'WAV', quality=70)
+    img_io.seek(0)
+    return send_file(img_io, mimetype='image/jpeg')
+	return send_file(audio, attachment_filename="testing.wav", as_attachment=True)
+
 	
 @app.route('/page/<string:page_name>/')
 def render_static(page_name):
