@@ -15,7 +15,8 @@ class Discovery(object):
         )
 
     def query(self, ingredients, exact=True):
-        ingredients.append('water')
+        default_ingredients = ['water', 'salt', 'pepper']
+        ingredients.extend(default_ingredients)
         self.ingredients = ingredients
         ingred_str = '|'.join([word for word in ingredients])
         query_str = "Ingredients:" + ingred_str
