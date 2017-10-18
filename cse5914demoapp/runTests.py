@@ -62,11 +62,7 @@ def moveCursorRecipeWorks():
 
     directions = Recipe.preprocessDirections(data['Directions'])
 
-    forward = recipe.goForward()
-    print(forward)
-    print(directions[1])
-
-    assert forward == directions[1]
+    assert recipe.goForward() == directions[1]
     assert recipe.goBack() == directions[0]
 
 
