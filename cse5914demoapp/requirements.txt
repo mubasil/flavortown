@@ -6,3 +6,7 @@ nltk
 quantities
 fuzzywuzzy[speedup]
 bs4
+wave
+sys
+StringIO
+numpy

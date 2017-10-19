@@ -138,7 +138,7 @@ def answerQuery(query):
     elif my_class == "howto":
         answer['text'] = Youtube.getVideo(query)    
     else:
-        answer = {'text':"", 'voice':''}
+        answer = {'text':"Sorry, I didn't get that.", 'voice':''}
     
     
     return answer

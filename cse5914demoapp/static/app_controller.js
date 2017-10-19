@@ -117,7 +117,11 @@ self.sendQuestion = function(){
 		d = d['data'];
         console.log(d);
 		self.addToChat(d['text'], "chatbox1", "chatbox2");
-		responsiveVoice.speak(d['text'], "US English Female");
+		var speakingText = d['text']
+		if(speakingText.includes('http')){
+			speakingText = "I found this video. It might be helpful."
+		}
+		responsiveVoice.speak(speakingText, "US English Female");
     });	
 	
 }
@@ -170,10 +174,12 @@ self.addToChat = function(t, i, j){
 	
 	
 
-	var text = document.createTextNode(t);
+	//var text = document.createTextNode(t);
 	
 	
-	div2.appendChild(text);
+	//div2.appendChild(text);
+	
+	div2.innerHTML = t;
 	
 	div.appendChild(div2);
 

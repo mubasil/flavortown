@@ -13,4 +13,4 @@ class Youtube(object):
         vid =soup.find(attrs={'class':'yt-uix-tile-link'})
         vid_url = 'https://www.youtube.com' + vid['href']
         vid_code = vid_url[vid_url.index('=')+1:]
-        return '''<iframe width="560" height="315" src="https://www.youtube.com/embed/''' + str(vid_code) + '''" frameborder="0" allowfullscreen></iframe>'''
+        return '''<iframe width="240" height="135" src="https://www.youtube.com/embed/''' + str(vid_code) + '''" frameborder="0" allowfullscreen></iframe>'''
