@@ -103,17 +103,21 @@ self.selectNearRecipe = function(id){
 
 self.sendQuestion = function(){
 	
+	if (self.queryText === ""){
+		self.queryText = document.getElementById("qbox").value;
+	}
 	var query = {textInfo:self.queryText};
 	self.queryText = "";
-	
+	document.getElementById("qbox").value = "";
 	self.addToChat(query.textInfo, "chatbox2", "chatbox1");
 
+	console.log(query);
 	$http.post("/ask", query)
     .then(function(d) {
 		d = d['data'];
         console.log(d);
 		self.addToChat(d['text'], "chatbox1", "chatbox2");
-		self.getAudio(d['text']);
+		//self.getAudio(d['text']);
     });	
 	
 }
@@ -156,7 +160,7 @@ self.speak = function(audio) {
 
 self.addToChat = function(t, i, j){
 	
-	var br = document.createElement('br');
+	var brs = document.createElement('div');
 	
 	var div = document.createElement('div');
 	div.className = 'list-group';
@@ -174,9 +178,14 @@ self.addToChat = function(t, i, j){
 	div.appendChild(div2);
 
     document.getElementById(i).appendChild(div);
-	document.getElementById(j).appendChild(br);
-	document.getElementById(j).appendChild(br);
-	document.getElementById(j).appendChild(br);
+	
+	for(var i = div.offsetHeight; i > 0; i -= 20){
+		brs.appendChild(document.createElement('br'));
+	}
+	
+	document.getElementById(j).appendChild(brs);
+	var scrolly = document.getElementById('scrolly');
+	scrolly.scrollTop = scrolly.scrollHeight;
 }
 	
 });

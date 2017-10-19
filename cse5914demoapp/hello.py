@@ -208,21 +208,28 @@ def ask():
 
 @app.route('/stt', methods=['POST'])
 def stt():
-    global speech_text
-    content = request.get_json(silent=True)
-    txt = speech_text.transcribe_audio(content)
-    return jsonify(txt)
+	global speech_text
+	content = request.files['file']
+	txt = speech_text.transcribe_audio(content)
+	return jsonify(txt)
     
 @app.route('/tts', methods=['POST'])
 def tts():
-    global speech_text
-    content = request.get_json(silent=True)
-    audio = speech_text.speak_text(content['textInfo'])
-    buf = StringIO()
-    audio.save(buf, 'WAV', quality=70)
-    img_io.seek(0)
-    return send_file(img_io, mimetype='image/jpeg')
-    return send_file(audio, attachment_filename="testing.wav", as_attachment=True)
+	global speech_text
+	content = request.get_json(silent=True)
+	audio = speech_text.speak_text(content['textInfo'])
+	buf = StringIO()
+	
+	file = open(buf, 'w')
+	file.write(audio)
+	file.close()
+	
+	
+	response = make_response(buf.getvalue())
+	buf.close()
+	response.headers['Content-Type'] = 'audio/wav'
+	response.headers['Content-Disposition'] = 'attachment; filename=sound.wav'
+	return response
 
     
 @app.route('/page/<string:page_name>/')

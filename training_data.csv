@@ -7,7 +7,7 @@ repeat that,current
 could you say that again?,current
 again,current
 repeat,current
-what now,current
+what was that?,current
 say that again,current
 what do?,current
 ,
@@ -17,12 +17,15 @@ What comes next?,next
 Go on,next
 next,next
 continue,next
-whas do I do next?,next
+what do I do next?,next
 move to the next step,next
 what now,next
 go forward,next
 got it,next
 what next,next
+then what ,next
+ok what now,next
+what now,next
 ,
 What was that last step?,previous
 Tell me the previous step,previous
@@ -80,3 +83,7 @@ How many ounces is a kilogram?,conversion
 How many ounces are a pound?,conversion
 I want this in cups,conversion
 convert cups to ounces,conversion
+can you convert all of that to tablespoons,conversion
+what's that in cups,conversion
+what's that in tablespoons,conversion
+what's that in ounces,conversion

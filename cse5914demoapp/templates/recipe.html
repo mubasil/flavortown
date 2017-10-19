@@ -4,9 +4,11 @@
 <link href="https://bootswatch.com/united/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/recorderjs/0.1.0/recorder.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular-animate.js"></script>
 <script src="{{ url_for('static', filename='app_controller.js')}}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <style>
 
@@ -251,7 +253,7 @@ h2{
 	
 	<div class="col-lg-6 animated fadeInUp second">
 		<h1>Chat</h1>
-		<div class="well well-lg" style="min-height:600px">
+		<div class="well well-lg" id='scrolly' style="min-height:600px; max-height:600px; overflow-y:scroll;" >
 		
 		<div class="col-md-6" id="chatbox1">
 		</div>
@@ -261,9 +263,9 @@ h2{
 		
 		
 		</div>
-		<form class="form-inline">
-		  <input type="text" ng-model="ctrl.queryText" class="form-control" id="inlineFormInput" placeholder="Enter query..." style="width:75%;">
-		  <button type="button" class="btn btn-success" ng-click="ctrl.sendQuestion()">Submit</button>
+		<form class="form-inline" ng-submit="ctrl.sendQuestion()">
+		  <input type="text" id='qbox' ng-model="ctrl.queryText" class="form-control" id="inlineFormInput" placeholder="Enter query..." style="width:75%;">
+		  <button type="submit" class="btn btn-success" >Submit</button>
 		  <button type="button" onclick="buttClick()" class="btn btn-success">
 		  <span id="mySpan">
 		  Speak
@@ -326,20 +328,22 @@ h2{
     recorder.clear();
   }
   function createDownloadLink() {
-    recorder && recorder.exportWAV(function(blob) {
-      var url = URL.createObjectURL(blob);
-      var li = document.createElement('li');
-      var au = document.createElement('audio');
-      var hf = document.createElement('a');
-      
-      au.controls = true;
-      au.src = url;
-      hf.href = url;
-      hf.download = new Date().toISOString() + '.wav';
-      hf.innerHTML = hf.download;
-      li.appendChild(au);
-      li.appendChild(hf);
-      recordingslist.appendChild(li);
+    recorder && recorder.exportWAV(function(audio) {
+		document.getElementById("qbox").value = "processing...";
+		var form = new FormData();
+		form.append('file', audio, 'test.wav');
+		form.append('title', 'test');
+		//Chrome inspector shows that the post data includes a file and a title.                                                                                                                                           
+		$.ajax({
+		  type: 'POST',
+		  url: '/stt',
+		  data: form,
+		  cache: false,
+		  processData: false,
+		  contentType: false
+		}).done(function(data) {
+		  document.getElementById("qbox").value = data;
+		});
     });
   }
   window.onload = function init() {
