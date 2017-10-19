@@ -1,11 +1,13 @@
 from cloudant import Cloudant
 from flask import Flask, render_template, request, jsonify, send_file
-import StringIO
+from StringIO import StringIO
 import atexit
 import cf_deployment_tracker
 import os
 import json
 import sys
+import wave
+from nltk import word_tokenize
 from discovery import Discovery 
 from speechtext import SpeechText
 from recipe import Recipe
@@ -58,13 +60,12 @@ def processImage(imagefile):
 def answerQuery(query):
 
     global selectedRecipe
-    answer = {'text':"Sorry, I didn't get that", 'voice':''}
-    
-    #TODO to perform NLC on query
+    answer = {'text':"", 'voice':''}
     
     nlc = NLC()
-
-    my_class = nlc.classify(query)
+    my_class = ""
+    if query:
+        my_class = nlc.classify(query)
 
     #possible options:
     
@@ -114,12 +115,30 @@ def answerQuery(query):
     
     elif my_class == "conversion":
         unitNames = [u.symbol for _, u in units.__dict__.items() if isinstance(u, type(units.deg))] + [u for u, f in u.__dict__.items() if isinstance(f, type(units.deg))]
-
-        answer['text'] = UnitConverter.getConversion(query)
-
+        unitNames.remove('in')
+        unitNames.extend(['tablespoon', 'teaspoon', 'tsp', 'tbsp'])
+        unitsFound = []
+        for token in word_tokenize(query):
+            if (token in unitNames) or (token[:-1] in unitNames):
+                if(token != 'in'):
+				    unitsFound.append(token)
+        app.logger.info(unitsFound)
+        if(len(unitsFound) == 1):
+            for ing in selectedRecipe.getIngredientFromCurrentDirection():
+                conversionQuery = "What is " + ing['Val'] + " " + ing['Unit'] + " in " + unitsFound[0]
+                app.logger.info(conversionQuery)
+                if answer['text']:
+                    answer['text'] = answer['text'] + " and "
+                answer['text'] = answer['text'] + UnitConverter.getConversion(conversionQuery)
+        elif(len(unitsFound) > 1):
+            answer['text'] = UnitConverter.getConversion(query)
+        elif(len(unitsFound) == 0):
+            answer['text'] = "Sorry, I don't know how to convert that."
+    
     elif my_class == "howto":
         answer['text'] = Youtube.getVideo(query)    
-
+    else:
+        answer = {'text':"", 'voice':''}
     
     
     return answer
@@ -220,8 +239,11 @@ def tts():
 	audio = speech_text.speak_text(content['textInfo'])
 	buf = StringIO()
 	
-	file = open(buf, 'w')
-	file.write(audio)
+	orig = wave.open(audio)
+	
+	file = wave.open(buf, 'w')
+	file.setparams(orig.getparams())
+	file.writeframes(audio)
 	file.close()
 	
 	

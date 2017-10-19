@@ -117,7 +117,7 @@ self.sendQuestion = function(){
 		d = d['data'];
         console.log(d);
 		self.addToChat(d['text'], "chatbox1", "chatbox2");
-		//self.getAudio(d['text']);
+		responsiveVoice.speak(d['text'], "US English Female");
     });	
 	
 }

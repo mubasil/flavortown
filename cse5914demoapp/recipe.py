@@ -41,6 +41,8 @@ class Recipe(object):
 
 	def getIngredientFromCurrentDirection(self):
 		unitNames = [u.symbol for _, u in units.__dict__.items() if isinstance(u, type(units.deg))] + [u for u, f in u.__dict__.items() if isinstance(f, type(units.deg))]
+		unitNames.remove('in')
+		unitNames.extend(['tablespoon', 'teaspoon', 'tsp', 'tbsp'])
 		matches = [0] * len(self.ingredients)
 		ingList = [deepcopy({'Val':"", 'Unit':"", 'Item':"", 'Text':""}) for i in range(len(self.ingredients))]
 		
@@ -49,7 +51,7 @@ class Recipe(object):
 			for token in word_tokenize(self.ingredients[i]):
 				if self.isFraction(token) or token.isnumeric():
 					ingList[i]['Val'] = token
-				elif token in unitNames:
+				elif (token in unitNames) or (token[:-1] in unitNames):
 					ingList[i]['Unit'] = token
 				else:
 					ingList[i]['Item'] = ingList[i]['Item'] + " " + token
