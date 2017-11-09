@@ -39,19 +39,14 @@ self.addIngredient= function(){
 self.getRecipes = function(){
     
 	self.loadingR = true;
-	$http.get("/getExactRecipes")
+	$http.get("/getRecipes")
     .then(function(d) {
-        self.recipes = self.recipes.concat(d.data);
+        self.recipes = self.recipes.concat(d.data['exact']);
+		self.nearRecipes = self.nearRecipes.concat(d.data['near']);
 		self.loadingR = false;
     });	
 	
-	$http.get("/getNearRecipes")
-    .then(function(d) {
-        self.nearRecipes = self.nearRecipes.concat(d.data);
-
-		self.loadingN=false;
-
-    });	
+	
 	
 }
 

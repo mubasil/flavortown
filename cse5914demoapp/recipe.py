@@ -2,6 +2,7 @@ import json
 from nltk import word_tokenize
 from quantities import units
 from copy import deepcopy
+import string
 
 class Recipe(object):
 	
@@ -55,9 +56,10 @@ class Recipe(object):
 					ingList[i]['Unit'] = token
 				else:
 					ingList[i]['Item'] = ingList[i]['Item'] + " " + token
-					if token in self.getCurrentDirection():
+					if (token in self.getCurrentDirection()) and (token not in string.punctuation):
 						matches[i] += 1
-				
+		print(self.getCurrentDirection())
+		print(matches)		
 		applicableIngredients = []
 		for i in range(len(ingList)):
 			if(matches[i] == max(matches)):

@@ -34,6 +34,12 @@ speech_text = SpeechText()
 
 
 #takes in a list of ingredients, returns list of possible recipes
+def getRecipes(ingredients):
+    discovery = Discovery()
+    my_query = discovery.query(ingredients)
+    return my_query
+
+#takes in a list of ingredients, returns list of possible recipes
 def getExactRecipes(ingredients):
     discovery = Discovery()
     my_query = discovery.query(ingredients)
@@ -42,7 +48,7 @@ def getExactRecipes(ingredients):
 #takes in a list of ingredients, returns list of possible recipes
 def getNearRecipes(ingredients):
     discovery = Discovery()
-    my_query = discovery.query(ingredients, False)
+    my_query = discovery.query(ingredients)
     return my_query
 
 
@@ -121,7 +127,7 @@ def answerQuery(query):
         for token in word_tokenize(query):
             if (token in unitNames) or (token[:-1] in unitNames):
                 if(token != 'in'):
-				    unitsFound.append(token)
+                    unitsFound.append(token)
         app.logger.info(unitsFound)
         if(len(unitsFound) == 1):
             for ing in selectedRecipe.getIngredientFromCurrentDirection():
@@ -187,6 +193,12 @@ def getExactRecipesFromIngredientsList():
     recipeList = getExactRecipes(ingredientsList)
     return jsonify(recipeList)
     
+@app.route('/getRecipes', methods=['GET'])
+def getRecipesFromIngredientsList():
+    global ingredientsList
+    recipeList = getRecipes(ingredientsList)
+    return jsonify(recipeList)
+    
 @app.route('/getNearRecipes', methods=['GET'])
 def getNearRecipesFromIngredientsList():
     global ingredientsList
@@ -227,31 +239,31 @@ def ask():
 
 @app.route('/stt', methods=['POST'])
 def stt():
-	global speech_text
-	content = request.files['file']
-	txt = speech_text.transcribe_audio(content)
-	return jsonify(txt)
+    global speech_text
+    content = request.files['file']
+    txt = speech_text.transcribe_audio(content)
+    return jsonify(txt)
     
 @app.route('/tts', methods=['POST'])
 def tts():
-	global speech_text
-	content = request.get_json(silent=True)
-	audio = speech_text.speak_text(content['textInfo'])
-	buf = StringIO()
-	
-	orig = wave.open(audio)
-	
-	file = wave.open(buf, 'w')
-	file.setparams(orig.getparams())
-	file.writeframes(audio)
-	file.close()
-	
-	
-	response = make_response(buf.getvalue())
-	buf.close()
-	response.headers['Content-Type'] = 'audio/wav'
-	response.headers['Content-Disposition'] = 'attachment; filename=sound.wav'
-	return response
+    global speech_text
+    content = request.get_json(silent=True)
+    audio = speech_text.speak_text(content['textInfo'])
+    buf = StringIO()
+    
+    orig = wave.open(audio)
+    
+    file = wave.open(buf, 'w')
+    file.setparams(orig.getparams())
+    file.writeframes(audio)
+    file.close()
+    
+    
+    response = make_response(buf.getvalue())
+    buf.close()
+    response.headers['Content-Type'] = 'audio/wav'
+    response.headers['Content-Disposition'] = 'attachment; filename=sound.wav'
+    return response
 
     
 @app.route('/page/<string:page_name>/')
