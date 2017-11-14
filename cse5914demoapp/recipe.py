@@ -52,7 +52,7 @@ class Recipe(object):
         return timeDirections
 
     def getTemperatureRelatedDirections(self):
-        units = ['degrees', 'celsius', 'fahrenheit', 'C', 'F']
+        units = ['degrees', 'celsius', 'fahrenheit', 'C', 'F', 'heat']
         tempDirections = []
         for direction in self.getDirections():
             for token in word_tokenize(direction):
