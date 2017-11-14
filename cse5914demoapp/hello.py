@@ -64,13 +64,15 @@ def processImage(imagefile):
 
 #takes in a text query, returns a text and voice answer
 def answerQuery(query):
-
+    print query
     global selectedRecipe
     answer = {'text':"", 'voice':''}
     
     nlc = NLC()
     my_class = ""
     if query:
+        if query.endswith('?'):
+            query = query[:-1]
         my_class = nlc.classify(query)
 
     #possible options:
@@ -142,7 +144,13 @@ def answerQuery(query):
             answer['text'] = "Sorry, I don't know how to convert that."
     
     elif my_class == "howto":
-        answer['text'] = Youtube.getVideo(query)    
+        answer['text'] = Youtube.getVideo(query) 
+
+    elif my_class == "directions":
+        if "temperature" in query.lower().split():
+            answer['text'] = selectedRecipe.getTemperatureDirectionForQuery(query)
+        else:
+            answer['text'] = selectedRecipe.getTimeDirectionForQuery(query)
     else:
         answer = {'text':"Sorry, I didn't get that.", 'voice':''}
     
