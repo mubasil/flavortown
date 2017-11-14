@@ -64,7 +64,6 @@ def processImage(imagefile):
 
 #takes in a text query, returns a text and voice answer
 def answerQuery(query):
-    print query
     global selectedRecipe
     answer = {'text':"", 'voice':''}
     
