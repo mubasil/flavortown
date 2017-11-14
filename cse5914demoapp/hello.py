@@ -115,7 +115,7 @@ def answerQuery(query):
     
     elif my_class == "ingredients":
         #Find out current ingredient (query~"How much of that?")
-        relaventIngredients = selectedRecipe.getIngredientFromCurrentDirection()
+        relaventIngredients = selectedRecipe.getIngredientFromQuery(query)
         answer['text'] = relaventIngredients.pop()['Text']
         for ing in relaventIngredients:
             answer['text'] = answer['text'] + " and " + ing['Text']
