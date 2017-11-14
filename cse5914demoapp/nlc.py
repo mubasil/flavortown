@@ -15,3 +15,4 @@ class NLC(object):
             return result['class_name']
         else:
             return None
+
