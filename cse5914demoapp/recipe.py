@@ -52,7 +52,7 @@ class Recipe(object):
         return timeDirections
 
     def getTemperatureRelatedDirections(self):
-        units = ['degrees', 'celsius', 'fahrenheit', 'C', 'F']
+        units = ['degrees', 'celsius', 'fahrenheit', 'C', 'F', 'heat']
         tempDirections = []
         for direction in self.getDirections():
             for token in word_tokenize(direction):
@@ -89,7 +89,7 @@ class Recipe(object):
                 applicableDirections.append(timeDirections[i])
         return applicableDirections
 
-    def getIngredientFromCurrentDirection(self):
+    def getIngredientsFromCurrentDirection(self):
         unitNames = [u.symbol for _, u in units.__dict__.items() if isinstance(u, type(units.deg))] + [u for u, f in u.__dict__.items() if isinstance(f, type(units.deg))]
         unitNames.remove('in')
         unitNames.extend(['tablespoon', 'teaspoon', 'tsp', 'tbsp'])
@@ -115,6 +115,15 @@ class Recipe(object):
         
         return applicableIngredients
 
+    def getIngredientFromQuery(self,query):
+        results = []
+        ingredients = self.getIngredientsFromCurrentDirection()
+        for i in ingredients:
+            if i['Item'] in query:
+                results.append(i)
+        return ingredients if len(results) == 0 else results
+        
+
     def getInfo(self):
         return self.recipeInfo
 
@@ -129,5 +138,6 @@ class Recipe(object):
         return final
 
 
-        
+
+
         

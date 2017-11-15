@@ -115,7 +115,7 @@ def answerQuery(query):
     
     elif my_class == "ingredients":
         #Find out current ingredient (query~"How much of that?")
-        relaventIngredients = selectedRecipe.getIngredientFromCurrentDirection()
+        relaventIngredients = selectedRecipe.getIngredientFromQuery(query)
         answer['text'] = relaventIngredients.pop()['Text']
         for ing in relaventIngredients:
             answer['text'] = answer['text'] + " and " + ing['Text']
@@ -131,7 +131,7 @@ def answerQuery(query):
                     unitsFound.append(token)
         app.logger.info(unitsFound)
         if(len(unitsFound) == 1):
-            for ing in selectedRecipe.getIngredientFromCurrentDirection():
+            for ing in selectedRecipe.getIngredientsFromCurrentDirection():
                 conversionQuery = "What is " + ing['Val'] + " " + ing['Unit'] + " in " + unitsFound[0]
                 app.logger.info(conversionQuery)
                 if answer['text']:
