@@ -145,11 +145,11 @@ def answerQuery(query):
     elif my_class == "howto":
         answer['text'] = Youtube.getVideo(query) 
 
-    elif my_class == "directions":
-        if "temperature" in query.lower().split():
-            answer['text'] = selectedRecipe.getTemperatureDirectionForQuery(query)
-        else:
-            answer['text'] = selectedRecipe.getTimeDirectionForQuery(query)
+    elif my_class == "temperature":
+        answer['text'] = selectedRecipe.getTemperatureDirectionForQuery(query)
+        
+    elif my_class == "time":
+        answer['text'] = selectedRecipe.getTimeDirectionForQuery(query)
     else:
         answer = {'text':"Sorry, I didn't get that.", 'voice':''}
     
