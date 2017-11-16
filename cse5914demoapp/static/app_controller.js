@@ -11,8 +11,10 @@ app.controller('ctrl', function($http, $scope) {
 	self.selectedRecipe = {};
 	self.newIngredient = "";
 	self.queryText = "";
-	
-	
+    self.recording = false;
+    self.token = ""
+    self.ready = false;
+
 self.getIngredients = function(){
 	
 	$http.post("/processImage", self.imagefile)
@@ -22,6 +24,71 @@ self.getIngredients = function(){
 
 	
 }
+
+self.stream;
+
+self.buttClick =  function() {
+  
+	if(recording){
+		self.stopRecording();
+	
+	} else{
+	
+		self.startRecording();
+	}
+  
+}
+
+self.startRecording = function() {
+   document.getElementById("mySpan").textContent = "...";
+
+   setTimeout(function() {
+          console.log('ready');
+          document.getElementById("speakButton").classList.remove("btn-success");
+          document.getElementById("speakButton").classList.add("btn-warning");
+
+    }, 2000);
+    
+   recording = true;
+    fetch('/api/speech-to-text/token')
+  .then(function(response) {
+      return response.text();
+  }).then(function (token) {
+    self.token = token;
+    stream = WatsonSpeech.SpeechToText.recognizeMicrophone({
+        token: token,
+        outputElement: false
+    });
+
+    stream.setEncoding('utf8');
+    
+    
+    stream.on('data', function(data) {
+      console.log(data);
+      if (data.toLowerCase().indexOf("chef") != -1){
+            document.getElementById("qbox").value = data.substring(data.toLowerCase().indexOf("chef") + 5, data.indexOf("."));
+            self.sendQuestion();
+        }
+    });
+    
+    stream.on('error', function(err) {
+        console.log(err);
+    });
+
+
+  }).catch(function(error) {
+      console.log(error);
+  });
+	
+    
+}
+self.stopRecording =  function() {
+  
+  	document.getElementById("mySpan").textContent = "Speak";
+    self.ready = true;
+    stream.stop();
+    recording = false;
+  }
 
 self.removeIngredient = function(id){
 	
@@ -116,7 +183,24 @@ self.sendQuestion = function(){
 		if(speakingText.includes('http')){
 			speakingText = "I found this video. It might be helpful."
 		}
-		responsiveVoice.speak(speakingText, "US English Female");
+        
+        function voiceStartCallback() {
+            document.getElementById("speakButton").classList.remove("btn-warning");
+          document.getElementById("speakButton").classList.add("btn-success");
+
+        }
+         
+        function voiceEndCallback() {
+            document.getElementById("speakButton").classList.remove("btn-success");
+          document.getElementById("speakButton").classList.add("btn-warning");
+        }
+         
+        var parameters = {
+            onstart: voiceStartCallback,
+            onend: voiceEndCallback
+        }
+ 
+		responsiveVoice.speak(speakingText, "US English Female", parameters);
     });	
 	
 }
@@ -149,6 +233,7 @@ self.sendAudio = function(query){
     });	
 	
 }
+
 
 self.speak = function(audio) {
 	

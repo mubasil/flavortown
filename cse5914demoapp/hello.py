@@ -15,7 +15,9 @@ from nlc import NLC
 from conversion import UnitConverter
 from youtube import Youtube
 from quantities import units
-
+from watson_developer_cloud import AuthorizationV1 as Authorization
+from watson_developer_cloud import SpeechToTextV1 as SpeechToText
+#from imageRecognizer import ImageClassifier
 
 # Emit Bluemix deployment event
 cf_deployment_tracker.track()
@@ -57,7 +59,9 @@ def processImage(imagefile):
 
     ingredientList = [{'ingredient':''}]
     
-    #TODO logic
+    #imageClassifier = ImageClassifier()
+    
+    #ingredientList = imageClassifier.classify(imagefile)
     
     return ingredientList
 
@@ -265,6 +269,10 @@ def tts():
     response.headers['Content-Disposition'] = 'attachment; filename=sound.wav'
     return response
 
+@app.route('/api/speech-to-text/token')
+def getSttToken():
+    authorization = Authorization(username='824801e9-c8af-4ecd-ac9a-bbc001cf7769', password='2Ug6krjqdA8R')
+    return authorization.get_token(url=SpeechToText.default_url)
     
 @app.route('/page/<string:page_name>/')
 def render_static(page_name):

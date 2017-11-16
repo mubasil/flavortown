@@ -7,6 +7,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/recorderjs/0.1.0/recorder.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular-animate.js"></script>
 <script src="{{ url_for('static', filename='app_controller.js')}}"></script>
+<script src="{{ url_for('static', filename='watson-speech.js')}}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
@@ -266,8 +267,8 @@ h2{
 		</div>
 		<form class="form-inline" ng-submit="ctrl.sendQuestion()">
 		  <input type="text" id='qbox' ng-model="ctrl.queryText" class="form-control" id="inlineFormInput" placeholder="Enter query..." style="width:75%;">
-		  <button type="submit" class="btn btn-success" >Submit</button>
-		  <button type="button" onclick="buttClick()" class="btn btn-success">
+		  <button id='submitButton' type="submit" class="btn btn-success" >Submit</button>
+		  <button id='speakButton' type="button" ng-click="ctrl.buttClick()" class="btn btn-success">
 		  <span id="mySpan">
 		  Speak
 		  </span>
@@ -275,12 +276,68 @@ h2{
 		</form>
 	</div>
 
+    
 
 </body>
 
 <script>
 
+    var recording = false;
+    var stream;
+    function buttClick(){
+  
+	if(recording){
+		stopRecording();
+	
+	} else{
+	
+		startRecording();
+	}
+  
+  }
+  function startRecording() {
+   document.getElementById("mySpan").textContent = "...";
+   recording = true;
+    fetch('/api/speech-to-text/token')
+  .then(function(response) {
+      return response.text();
+  }).then(function (token) {
 
+    stream = WatsonSpeech.SpeechToText.recognizeMicrophone({
+        token: token,
+        outputElement: false
+    });
+
+    stream.setEncoding('utf8');
+    
+    stream.on('data', function(data) {
+      console.log(data);
+      if (data.toLowerCase().indexOf("chef") != -1){
+            document.getElementById("qbox").value = data.substring(data.toLowerCase().indexOf("chef") + 5, data.indexOf("."));
+            document.getElementById("submitButton").click();
+        }
+    });
+    
+    stream.on('error', function(err) {
+        console.log(err);
+    });
+
+
+  }).catch(function(error) {
+      console.log(error);
+  });
+	
+    
+  }
+  function stopRecording() {
+  
+  	document.getElementById("mySpan").textContent = "Speak";
+
+    stream.stop();
+    recording = false;
+  }
+    
+/*
   var audio_context;
   var recorder;
   var recording = false;
@@ -365,6 +422,6 @@ h2{
 		console.log('No live audio input: ' + e);
     });
   };
-
+*/
 </script>
 </html>
