@@ -68,13 +68,14 @@ def processImage(imagefile):
 
 #takes in a text query, returns a text and voice answer
 def answerQuery(query):
-
     global selectedRecipe
     answer = {'text':"", 'voice':''}
     
     nlc = NLC()
     my_class = ""
     if query:
+        if query.endswith('?'):
+            query = query[:-1]
         my_class = nlc.classify(query)
 
     #possible options:
@@ -118,7 +119,7 @@ def answerQuery(query):
     
     elif my_class == "ingredients":
         #Find out current ingredient (query~"How much of that?")
-        relaventIngredients = selectedRecipe.getIngredientFromCurrentDirection()
+        relaventIngredients = selectedRecipe.getIngredientFromQuery(query)
         answer['text'] = relaventIngredients.pop()['Text']
         for ing in relaventIngredients:
             answer['text'] = answer['text'] + " and " + ing['Text']
@@ -134,7 +135,7 @@ def answerQuery(query):
                     unitsFound.append(token)
         app.logger.info(unitsFound)
         if(len(unitsFound) == 1):
-            for ing in selectedRecipe.getIngredientFromCurrentDirection():
+            for ing in selectedRecipe.getIngredientsFromCurrentDirection():
                 conversionQuery = "What is " + ing['Val'] + " " + ing['Unit'] + " in " + unitsFound[0]
                 app.logger.info(conversionQuery)
                 if answer['text']:
@@ -146,7 +147,13 @@ def answerQuery(query):
             answer['text'] = "Sorry, I don't know how to convert that."
     
     elif my_class == "howto":
-        answer['text'] = Youtube.getVideo(query)    
+        answer['text'] = Youtube.getVideo(query) 
+
+    elif my_class == "temperature":
+        answer['text'] = selectedRecipe.getTemperatureDirectionForQuery(query)
+        
+    elif my_class == "time":
+        answer['text'] = selectedRecipe.getTimeDirectionForQuery(query)
     else:
         answer = {'text':"Sorry, I didn't get that.", 'voice':''}
     
