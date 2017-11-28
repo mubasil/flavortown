@@ -106,6 +106,8 @@ how much of those,ingredients
 how many onions,ingredients
 how many eggs,ingredients
 how many,ingredients
+how much butter do I need,ingredients
+how much cooking oil,ingredients
 
 How many teaspoons are in a tablespoon?,conversion
 How many tablespoons are in a cup?,conversion
@@ -125,3 +127,7 @@ what's that in ounces,conversion
 What is 180 degrees Celsius in Fahrenheit?,conversion
 How many cups are in a liter?,conversion
 How many ounces are a pound?,conversion
+how much butter do I need in cups,conversion
+how much flour in ounces,conversion
+convert pepper to teaspoons,conversion
+how many garlic in kilograms,conversion
