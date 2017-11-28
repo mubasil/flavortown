@@ -10,7 +10,7 @@ class NLC(object):
                 password='VRzaHN6O4AAE')
 
     def classify(self, request):
-        result = self.classifier.classify('9dddc0x240-nlc-20700', request)['classes'][0]
+        result = self.classifier.classify('e55175x249-nlc-16566', request)['classes'][0]
         if result['confidence'] >.87:
             return result['class_name']
         else:
