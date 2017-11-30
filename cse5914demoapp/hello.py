@@ -95,6 +95,8 @@ def answerQuery(query):
         index = -1  
         key_words = {
             'first': 0,
+            'start': 0,
+            'beginning': 0,
             'second': 1,
             'third': 2,
             'fourth': 3,
@@ -106,7 +108,9 @@ def answerQuery(query):
             'tenth': 9,
             'eleventh': 10,
             'twelfth': 11,
-            'last': len(selectedRecipe.directions) - 1
+            'last': len(selectedRecipe.directions) - 1,
+            'end': len(selectedRecipe.directions) - 1,
+            'finish': len(selectedRecipe.directions) - 1
         }
         for word in words:
             if word in key_words:
@@ -126,16 +130,16 @@ def answerQuery(query):
     
     elif my_class == "conversion":
         unitNames = [u.symbol for _, u in units.__dict__.items() if isinstance(u, type(units.deg))] + [u for u, f in u.__dict__.items() if isinstance(f, type(units.deg))]
-        unitNames.remove('in')
         unitNames.extend(['tablespoon', 'teaspoon', 'tsp', 'tbsp'])
         unitsFound = []
+
         for token in word_tokenize(query):
             if (token in unitNames) or (token[:-1] in unitNames):
-                if(token != 'in'):
+                if(token != 'in' and token != 'do' and token != 'use'):
                     unitsFound.append(token)
         app.logger.info(unitsFound)
         if(len(unitsFound) == 1):
-            for ing in selectedRecipe.getIngredientsFromCurrentDirection():
+            for ing in selectedRecipe.getIngredientFromQuery(query):
                 conversionQuery = "What is " + ing['Val'] + " " + ing['Unit'] + " in " + unitsFound[0]
                 app.logger.info(conversionQuery)
                 if answer['text']:
