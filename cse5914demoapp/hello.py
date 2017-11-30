@@ -130,12 +130,12 @@ def answerQuery(query):
     
     elif my_class == "conversion":
         unitNames = [u.symbol for _, u in units.__dict__.items() if isinstance(u, type(units.deg))] + [u for u, f in u.__dict__.items() if isinstance(f, type(units.deg))]
-        unitNames.extend(['tablespoon', 'teaspoon', 'tsp', 'tbsp'])
+        unitNames.extend(['tablespoon', 'teaspoon', 'tsp', 'tbsp', 'ounces', 'Celsius', 'Fahrenheit','milliliter', 'liter'])
         unitsFound = []
 
         for token in word_tokenize(query):
             if (token in unitNames) or (token[:-1] in unitNames):
-                if(token != 'in' and token != 'do' and token != 'use'):
+                if(token != 'in' and token != 'do' and token != 'use' and token!= 'to'):
                     unitsFound.append(token)
         app.logger.info(unitsFound)
         if(len(unitsFound) == 1):
