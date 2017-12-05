@@ -117,12 +117,40 @@ class Recipe(object):
 
     def getIngredientFromQuery(self,query):
         results = []
-        ingredients = self.getIngredientsFromCurrentDirection()
+        matches = [0] * len(self.ingredients)
+        ingredients = self.getIngredients()
+        j=0
         for i in ingredients:
-            if i['Item'] in query:
-                results.append(i)
-        return ingredients if len(results) == 0 else results
+            for token in i['Item'].split():
+                if token in query:
+                    matches[j] += 1
+            j+=1
+
+        for i in range(len(ingredients)):
+            if(matches[i] >0 and matches[i]== max(matches)):
+                results.append(ingredients[i])
+        return self.getIngredientsFromCurrentDirection() if len(results) == 0 else results
+
+    
+    def getIngredients(self):
+        unitNames = [u.symbol for _, u in units.__dict__.items() if isinstance(u, type(units.deg))] + [u for u, f in u.__dict__.items() if isinstance(f, type(units.deg))]
+        unitNames.remove('in')
+        unitNames.extend(['tablespoon', 'teaspoon', 'tsp', 'tbsp'])
+        matches = [0] * len(self.ingredients)
+        ingList = [deepcopy({'Val':"", 'Unit':"", 'Item':"", 'Text':""}) for i in range(len(self.ingredients))]
         
+        for i in range(len(self.ingredients)):
+            ingList[i]['Text'] = self.ingredients[i]
+            for token in word_tokenize(self.ingredients[i]):
+                if self.isFraction(token) or token.isnumeric():
+                    ingList[i]['Val'] = token
+                elif (token in unitNames) or (token[:-1] in unitNames):
+                    ingList[i]['Unit'] = token
+                else:
+                    ingList[i]['Item'] = ingList[i]['Item'] + " " + token
+                    if token in self.getCurrentDirection():
+                        matches[i] += 1
+        return ingList
 
     def getInfo(self):
         return self.recipeInfo

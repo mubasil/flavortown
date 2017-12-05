@@ -14,6 +14,7 @@ repeat this step,current
 what do I need to mix again,current
 repeat that,current
 where am I,current
+what do I do,current
 
 What should I do next?,next
 What is the next step?,next
@@ -23,7 +24,7 @@ next,next
 continue,next
 what do I do next?,next
 move to the next step,next
-what now,next
+now what,next
 go forward,next
 got it,next
 what next,next
@@ -34,6 +35,10 @@ go on,next
 go to the next step,next
 what now,next
 then what,next
+got it,next
+okay,next
+k,next
+yep,next
 
 What was that last step?,previous
 Tell me the previous step,previous
@@ -52,17 +57,24 @@ first step,specific
 third step,specific
 what is the first step,specific
 second instruction,specific
+where do I start,specific
+what do I do first,specific
 
 How do I chop an onion?,howto
 How do I stuff a turkey?,howto
 How do I slice a tomato?,howto
 I don't know how to do this step,howto
+show me how to do that,howto
 
 What temperature should I set the oven at?,temperature
 what temperature do I set the oven to,temperature
 what temperature do I preheat the oven to,temperature
 how hot should I make the stove,temperature
 what heat should I use,temperature
+how hot,temperature
+preheat temperature,temperature
+preheat temp,temperature
+what temp,temperature
 
 How long should I bake it for?,time
 How long should I cook it for?,time
@@ -70,6 +82,7 @@ how long do I let this sit,time
 how long do I bake,time
 how long,time
 what length of time,time
+how long does that take,time
 
 How many ingredients do I need?,ingredients
 What is the ingredients list?,ingredients
@@ -93,6 +106,8 @@ how much of those,ingredients
 how many onions,ingredients
 how many eggs,ingredients
 how many,ingredients
+how much butter do I need,ingredients
+how much cooking oil,ingredients
 
 How many teaspoons are in a tablespoon?,conversion
 How many tablespoons are in a cup?,conversion
@@ -112,3 +127,7 @@ what's that in ounces,conversion
 What is 180 degrees Celsius in Fahrenheit?,conversion
 How many cups are in a liter?,conversion
 How many ounces are a pound?,conversion
+how much butter do I need in cups,conversion
+how much flour in ounces,conversion
+convert pepper to teaspoons,conversion
+how many garlic in kilograms,conversion
