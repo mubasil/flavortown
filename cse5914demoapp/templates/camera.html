@@ -1,10 +1,11 @@
 <html>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<link href="https://bootswatch.com/superhero/bootstrap.min.css" rel="stylesheet">
+<link href="https://bootswatch.com/3/united/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <style>
 
@@ -37,29 +38,47 @@ html, body{height:100%; margin:0; background-color: #C0392B; padding:0}
 
 }
 
+h1{
 
+	color: white;
+	
+
+}
+
+h3{
+
+	color: white;
+
+}
 </style>
 
 <body>
-	
 
-<div class="top-buffer animated fadeIn centering">
+<div style="text-align:center;">
+<h1 class="animated fadeIn" >Capture Image</h1>
+<h3 class="animated fadeIn" >Try to place ingredients in a row with a simple background</h2>
+<br>
+<a href="/page/image" class=" animated fadeIn btn btn-default">Skip this step</a>
+</div>
+<br>
+<div class="animated fadeIn centering">
 
-<img src="http://i.imgur.com/UaJKtUv.jpg" align="center" id="video" width="640" >
+<video id="video" width="960" height="540" autoplay></video>
 <br /> <br />
-<a href="/page/image" class="btn btn-default more-buffer">
+<div id='snap' class="btn btn-default more-buffer">
 <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
-</a>
-	
+</div>
+
 	
 </div>
 
+<canvas style="display:none;" id="canvas" width="960" height="540"></canvas>
 
 
 </body>
 
 <script>
-/*
+
 // Grab elements, create settings, etc.
 // Elements for taking the snapshot
 var video = document.getElementById('video');
@@ -67,13 +86,65 @@ var video = document.getElementById('video');
 // Get access to the camera!
 if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     // Not adding `{ audio: true }` since we only want video now
-    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+    var hdConstraints = {
+      video: {
+        mandatory: {
+          minWidth: 960,
+          minHeight: 540
+        }
+      }
+    };
+    navigator.mediaDevices.getUserMedia(hdConstraints).then(function(stream) {
         video.src = window.URL.createObjectURL(stream);
         video.play();
     });
 }
 
-*/
+var canvas = document.getElementById('canvas');
+var context = canvas.getContext('2d'); 
+
+function toblob(stuff) {
+    var g, type, bi, ab, ua, b, i;
+    g = stuff.split(',');
+    if (g[0].split('png')[1])
+        type = 'png';
+    else if (g[0].split('jpeg')[1])
+        type = 'jpeg';
+    else
+        return false;
+    bi = atob(g[1]);
+    ab = new ArrayBuffer(bi.length);
+    ua = new Uint8Array(ab);
+    for (i = 0; i < bi.length; i++) {
+        ua[i] = bi.charCodeAt(i);
+    }
+    b = new Blob([ua], {
+        type: "image/" + type
+    });
+    return b;
+}
+
+// Trigger photo take
+document.getElementById("snap").addEventListener("click", function() {
+	context.drawImage(video, 0, 0, 960, 540);
+    var dataURL = canvas.toDataURL();
+    s = new FormData();
+    s.append('image', toblob(dataURL)); 
+    var g = $.ajax({
+        url: 'http://localhost:443/image1',
+        type: 'POST',
+        processData : false,
+        contentType : false, 
+        data: s
+    }).done(function(data) {
+        window.location.href = '/page/imagean';
+	});
+
+   
+		
+});
+
+
 
 </script>
 </html>

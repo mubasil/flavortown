@@ -17,6 +17,8 @@ from youtube import Youtube
 from quantities import units
 from watson_developer_cloud import AuthorizationV1 as Authorization
 from watson_developer_cloud import SpeechToTextV1 as SpeechToText
+from flask_cors import CORS
+
 #from imageRecognizer import ImageClassifier
 
 # Emit Bluemix deployment event
@@ -27,6 +29,7 @@ app = Flask(__name__)
 db_name = 'mydb'
 client = None
 db = None
+CORS(app)
 
 ingredientsList = []
 recipes = {}

@@ -110,7 +110,7 @@ class Recipe(object):
                 
         applicableIngredients = []
         for i in range(len(ingList)):
-            if(matches[i] == max(matches)):
+            if(matches[i] > 0):
                 applicableIngredients.append(ingList[i])
         
         return applicableIngredients

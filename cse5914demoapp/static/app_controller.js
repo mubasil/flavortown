@@ -14,6 +14,12 @@ app.controller('ctrl', function($http, $scope) {
     self.recording = false;
     self.token = ""
     self.ready = false;
+    self.myImage = "";
+    self.showImage = false;
+    
+    self.ingTitleText = "";
+    self.ingHeaderText = "";
+    self.showIngredients = false;
 
 self.getIngredients = function(){
 	
@@ -37,6 +43,37 @@ self.buttClick =  function() {
 		self.startRecording();
 	}
   
+}
+
+self.getImage = function(num){
+    
+    $http.get("http://localhost:443/image2")
+    .then(function(d) {
+        console.log(d);
+            self.myImage = 'data:image/png;base64,' + d.data;
+
+        self.showImage = true;
+        $http.get("http://localhost:443/image3")
+        .then(function(d) {
+            console.log(d);
+                self.myImage = 'data:image/png;base64,' + d.data;
+
+            $http.get("http://localhost:443/image4")
+            .then(function(d) {
+                console.log(d);
+                self.ingredients = d.data['ingredients'];
+                if(self.ingredients.length > 0){
+                    self.ingTitleText = "I found these ingredients."
+                    self.ingHeaderText = "Anything else?"
+                } else{
+                    self.ingTitleText = "Sorry, I didn't see anything."
+                    self.ingHeaderText = "Please enter manually:"
+                }
+                self.showIngredients = true;
+
+            });	
+        });	
+    });	
 }
 
 self.startRecording = function() {
@@ -85,6 +122,8 @@ self.startRecording = function() {
 self.stopRecording =  function() {
   
   	document.getElementById("mySpan").textContent = "Speak";
+    document.getElementById("speakButton").classList.remove("btn-warning");
+    document.getElementById("speakButton").classList.add("btn-success");
     self.ready = true;
     stream.stop();
     recording = false;
